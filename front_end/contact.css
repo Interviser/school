@@ -1,0 +1,82 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 20px;
+}
+
+#headmaster,#proprietor,#assistant_headmaster{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font: bold;
+    font-style: unset;
+    min-width: 30%;
+    max-width: 80%;
+    height: 500px;
+    width:fit-content;
+    margin:5px;
+    border: 1px solid blueviolet;
+    border-radius: 10px;
+}
+#image_of_headmaster,#image_of_assistant_headmaster,#image_of_proprietor{
+    height: 100%;
+    width: 80%;
+    overflow: hidden;
+    object-fit: cover;
+    min-width: 80%;
+    max-width: 100%;
+    margin-bottom:10px;
+    padding:10px;
+   }
+   img{
+    border-radius: 30px;
+    height: 80%;
+    width: 80%;
+    max-height: 100%;
+    object-fit: cover;
+   }
+#return-to-home{
+    color: blueviolet;
+    border-radius: 5px;
+    box-shadow: inset;
+    
+}
+@media screen and (max-width: 480px){
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin: 20px;
+    
+    }
+    #headmaster,#proprietor,#assistant_headmaster{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font: bold;
+        font-style: unset;
+        min-width: 30%;
+        max-width: 80%;
+        height: 500px;
+        margin:5px;
+        border: 1px solid blueviolet;
+        border-radius: 10px;
+        text-decoration: underline;
+}
+#image_of_headmaster,#image_of_assistant_headmaster,#image_of_proprietor{
+    height: 100%;
+    width: 100%;
+    margin: 10px;
+    overflow: hidden;
+   }
+   img{
+    height: 100%;
+    width: 100%;
+    min-height: 80%;
+    object-fit: cover;
+   }
+}

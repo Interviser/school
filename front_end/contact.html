@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="./contact.css">
+</head>
+<body>
+    <div>
+    <div class="container"><h2><strong>CONTACT CHRIST CARES EXECUTIVES ON THE FOLLOWING PLATFORMS</strong></h2></div>
+  </div>
+    <div class="container" id="proprietor">
+        <div class="container" id="image_of_proprietor">
+            <img src="./images/imageforall.jpg" alt="this is an image of the proprietor">
+        </div>
+        <div>
+            <h3><strong>CONTACT THE PROPRIETOR ON:</strong></h3>
+            <ul>
+                <li>
+                    <strong>NUMBER: 0540440785</strong>
+                </li>
+                <li>
+                    <strong>E-MAIL: francisbiney@gmail.com</strong>
+                </li>
+                <li>
+                    <strong> WHATSAPP NUMBER: 0540440785</strong>
+                </li>
+            </ul> 
+        </div>
+       
+    </div>
+     <div class="container" id="headmaster">
+        <div class="container" id="image_of_headmaster">
+            <img src="./images/imageforall.jpg" alt="this is an image of the headmaster">
+        </div>
+       <div>
+        <h3><strong>CONTACT THE HEADMASTER ON:</strong></h3>
+        <ul>
+            <li>
+                <strong>NUMBER: 0540440785</strong>
+            </li>
+            <li>
+                <strong>E-MAIL: francisbiney@gmail.com</strong>
+            </li>
+            <li>
+                <strong> WHATSAPP NUMBER: 0540440785</strong>
+            </li>
+        </ul>
+       </div>
+
+      </div>
+      <div class="container" id="assistant_headmaster">
+        <div class="container" id="image_of_assistant_headmaster">
+            <img src="./images/imageforall.jpg" alt="this is an image of the assistant headmaster">
+        </div>
+        <div>
+            <h3><strong>CONTACT DEP. HEAD ACADEMICS ON:</strong></h3>
+            <ul>
+                <li>
+                    <strong>NUMBER: 0540440785</strong>
+                </li>
+                <li>
+                    <strong>E-MAIL: francisbiney@gmail.com</strong>
+                </li>
+                <li>
+                    <strong> WHATSAPP NUMBER: 0540440785</strong>
+                </li>
+            </ul>
+         </div>
+
+      </div>
+    
+      <button id="return-to-home">return</button>
+      <section>
+        <footer>
+            <marquee behavior="" direction="">THESE CONTENTS ARE THE INFORMATION OF THE SCHOOL LEADERS, CALL FOR HELP OR ENQUIRIES </marquee>
+        </footer>
+      </section>
+      
+    <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script>
+        const return_home = document.getElementById('return-to-home')
+        function return_to_home(){
+            window.location.href = './index.html'
+        }
+        return_home.addEventListener('click', return_to_home)
+        
+
+        const verifyUser = async (e)=> {
+            e.preventDefault()
+            const token = localStorage.getItem('token')
+            try { 
+                const response = await fetch('http://localhost:3000/api/sendData/home',{
+                    method: 'GET',
+                    headers: {
+                       'authorization': `Bearer ${token}`
+                    }
+                })
+                if(response.ok){
+                     return console.log('successfully logged in')
+                }
+             //   else {
+              //      throw new Error('an error occurred')
+//                   window.location.href = 'login.html'
+                    //return console.log('something went wrong')
+                           
+                }
+            } catch (err) {
+                console.log(err)
+                window.location.href = 'login.html'
+            }
+        }
+        document.addEventListener('DOMContentLoaded',verifyUser)
+        
+    </script>
+    
+</body>
+</html>

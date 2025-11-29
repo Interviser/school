@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+    <div class="container" id="send_Annoucement">
+        <form action="" id="form" name="form">
+            <label for="title" name="title">TITLE:</label>
+            <input type="text" name="title" id="title" required><br>
+            <label for="msg" name="msg">MESSSAGE:</label>
+            <textarea name="msg" id="msg" required></textarea><br>
+            <button>SUBMIT</button>
+        </form>
+    </div>
+    <div class="container" id="show-annoucement">
+
+    </div>
+    <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+
+    <script>
+        const show_annoucement = document.getElementById('show-annoucement');
+        async function get_data_from_database() {
+            try {
+            const res = await fetch('http://localhost:8000/api/sendData');
+            if(!res.ok){
+                throw new Error('something wrong had occurred')
+            }
+            else{
+                show_annoucement.innerHTML=""
+                const posts =await res.json()
+                posts.forEach(post => {
+                    const header = document.createElement('h2')
+                    const msg = document.createElement('p')
+
+                    header.innerHTML = post.heading;
+                    msg.innerHTML = post.message;
+
+                    show_annoucement.appendChild(header);
+                    show_annoucement.appendChild(msg)
+
+
+                });
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        }
+
+        document.addEventListener('DOMContentLoaded',get_data_from_database)
+
+        const form = document.getElementById('form');
+        async function send_Data(e) {
+            e.preventDefault()
+                const formData = new FormData(this)
+                const title = formData.get('title').toUpperCase()
+                const msg = formData.get('msg')
+           
+            try {
+                const res = await fetch('http://localhost:8000/api/sendData', {
+                    method: 'POST',
+                    headers: {
+                        'content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        title: title,
+                        msg: msg
+                    })
+                });
+                if(!res.ok){
+                    throw new Error('error')
+                  return  console.log(`an error happened ${res.status} and ${res.statusText}`)
+                }
+                console.log('successfully done')
+
+               
+            } catch (error) {
+                console.error(error)
+            }
+            
+        }
+        form.addEventListener('submit', send_Data)
+
+       
+    </script>
+
+    
+</body>
+</html>
