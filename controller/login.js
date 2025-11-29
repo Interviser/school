@@ -1,13 +1,16 @@
 const login_model = require('../model/login_model');
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken');
 
-const router = express.Router()
 
 
-router.post('/login', async(req,res)=>{
+const login_controller = async(req,res)=>{
     try {
        const student = login_model(req.body)
             const id = student.id;
+            if(!id){
+                return res.status(400).json({message: "id is required"})
+            }
             const idExist = await login_model.findOne(id)
             
 
@@ -34,6 +37,6 @@ router.post('/login', async(req,res)=>{
         return res.status(500).json(err.message)
     } 
     
-})
+}
 
-module.exports = router;
+module.exports = login_controller;
