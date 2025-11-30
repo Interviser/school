@@ -1,4 +1,4 @@
-const login_model = require('../model/login_model');
+const login_model = require('../model/signup_model.js');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 
@@ -11,7 +11,7 @@ const login_controller = async(req,res)=>{
             if(!id){
                 return res.status(400).json({message: "id is required"})
             }
-            const idExist = await login_model.findOne(id)
+            const idExist = await login_model.findOne({id:id});
             
 
             if(!idExist){
