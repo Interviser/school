@@ -277,7 +277,7 @@
                     Login
                 </button>
             </div>
-            <span id="singup_here">Dont have an account? <a href="sign up.html">sign up here...</a></span>
+            <span id="singup_here">Dont have an account? <a href="signUp.html">sign up here...</a></span>
         </form>
         </div>
            
@@ -295,7 +295,7 @@
                 if(!username || !password){
                 return  console.log('fill every inputs')
             }
-            const response = await fetch("http://localhost:3000/api/sendData/login",{
+            const response = await fetch("http://localhost:3000/api/login",{
                 method: 'POST',
                 headers:
                 {'content-Type': 'application/json'},

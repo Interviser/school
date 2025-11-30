@@ -140,7 +140,7 @@
                 <div id="confirmError" class="error"></div>
             </div>
             
-            <div class="form-group">
+           <!--<div class="form-group">
                 <label for="Class">Class</label>
                 <select id="Class" name="Form" required>
                     <option value="">Select your class</option>
@@ -148,7 +148,7 @@
                     <option value="JHS 2">JHS 2</option>
                     <option value="JHS 3">JHS 3</option>
                 </select>
-            </div>
+            </div>--> 
 
             <div class="form-group">
                 <label for="fullName">Guardian Name</label>
@@ -169,89 +169,100 @@
             Already have an account? <a href="http://localhost:3000/login.html">Log in</a>
         </div>
     </div>
-
     <script>
-        document.getElementById('signupForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        document.getElementById('signupForm').addEventListener('submit', async function(event) {
+            event.preventDefault(event);
             
-            // Reset errors
-            document.querySelectorAll('.error').forEach(el => el.textContent = '');
+            // Clear previous error messages
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('passwordError').textContent = '';
+            document.getElementById('confirmError').textContent = '';
+            document.getElementById('contactError').textContent = '';
             
             // Get form values
-            const firstName = document.getElementById('firstName').value;
-            const middleName = document.getElementById('middleName').value;
-            const LastName = document.getElementById('lastName').value;
-            const email = document.getElementById('email').value;
+            const firstName = document.getElementById('firstName').value.trim();
+            const middleName = document.getElementById('middleName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
+            const fullName = document.getElementById('fullName').value.trim();
+            const contact = document.getElementById('contact').value.trim();
             
-            // Validation
-            let isValid = true;
+            let hasError = false;
             
-            if (firstName.length < 3) {
-                document.getElementById('nameError').textContent = 'Name must be at least 3 characters';
-                isValid = false;
-            }
-            if (middleName.length < 3) {
-                document.getElementById('nameError').textContent = 'Name must be at least 3 characters';
-                isValid = false;
-            }
-            if (lastName.length < 3) {
-                document.getElementById('nameError').textContent = 'Name must be at least 3 characters';
-                isValid = false;
+            // Validate name fields
+            const nameRegex = /^[A-Za-z]+$/;
+            if (!nameRegex.test(firstName) || !nameRegex.test(middleName) || !nameRegex.test(lastName)) {
+                document.getElementById('nameError').textContent = 'Names can only contain letters.';
+                hasError = true;
             }
             
-            if (!email.includes('@') || !email.includes('.')) {
-                document.getElementById('emailError').textContent = 'Please enter a valid email address';
-                isValid = false;
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email address.';
+                hasError = true;
             }
             
+            // Validate password
             if (password.length < 8) {
-                document.getElementById('passwordError').textContent = 'Password must be at least 8 characters';
-                isValid = false;
+                document.getElementById('passwordError').textContent = 'Password must be at least 8 characters long.';
+                hasError = true;
             }
             
+            // Validate confirm password
             if (password !== confirmPassword) {
-                document.getElementById('confirmError').textContent = 'Passwords do not match';
-                isValid = false;
+                document.getElementById('confirmError').textContent = 'Passwords do not match.';
+                hasError = true;
+            }
+
+            // Validate contact
+            const contactRegex = /^[0-9]{10,12}$/;
+            if (!contactRegex.test(contact)) {
+                document.getElementById('contactError').textContent = 'Contact must be 10 to 12 digits.';
+                hasError = true;
+            }
+        if(hasError) {
+                return;
             }
             
-           /* if (!studentId.match(/^\d+$/)) {
-                document.getElementById('idError').textContent = 'Student ID must contain only numbers';
-                isValid = false;
-            }*/
+            // Prepare data to send
+            const data = {
+                "firstName":firstName,
+               "middleName": middleName,
+                "lastName": lastName,
+               "emailAddress": email,
+                "password": password,
+                "guardianName": fullName,
+                "contact": contact
+            };
             
-            if (isValid) {
-                const sendData = async (e)=>{
-                try {
-                    const res = await fetch('http://localhost:3000/signup',{
-                        method: "post",
-                        headers:{"content-type": "application/JSON"},
-                        body: JSON.stringify({
-                            "firstName": `${firstName}`,
-                            "middleName": `${middleName}`,
-                            "lastName":`${lastName}`,
-                            "emailAddress":`${email}`,
-                            "password":`${confirmPassword}`
-                        })
-                        
-                    })
-                    if(res.ok){
-                        alert('Account created successfully!');
-                    }
-                    else{
-                        alert("ooops! something went wrong");
-                    }
+            try {
+                const response = await fetch('http://localhost:3000/api/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
                 
+                const result = await response.json();
+                
+                if (response.ok) {
+                    alert('Account created successfully! Please log in.');
+                    window.location.href = 'http://localhost:3000/login.html';
+                } else {
+                    alert('Error: ' + result.message);
+                }
             } catch (error) {
-                console.log('oops!!! an error occured, try again later')
-            }
-        } 
-                
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
             }
         });
-       
     </script>
+    
     
 </body>
 </html>

@@ -1,8 +1,8 @@
-const exress = require('express');
-const router = exress.Router();
+const express = require('express');
+const router = express.Router();
 
-const signUp_controller = require('../controller/login.js');
+const login_controller = require('../controller/login.js');
 
-router.get('/login',signUp_controller);
+router.post('/login',login_controller);
 
 module.exports = router;

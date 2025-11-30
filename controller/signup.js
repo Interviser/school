@@ -6,14 +6,17 @@ const students_model = require('../model/signup_model');
 const signUp_controller = async (req,res)=>{
     try{
         const studentsData = new students_model(req.body)
-        const {emailAddress} = studentsData;
+        const {firstName, lastName,emailAddress,password, guardianName, contact} = studentsData;
+        if(!firstName || !lastName || !emailAddress || !password || !guardianName || !contact){
+            return res.status(400).json("all fields are required")
+        }
 
        const emailExists = await students_model.findOne({emailAddress:emailAddress});
 
-       if(emailExists){
+           if(emailExists){
         return res.status(400).json("email already exists")
        }
-       const {password} = studentsData;
+       
        if(password.length < 6){
         return res.status(400).json("password must be at least 6 characters")
        }

@@ -18,7 +18,7 @@ const login_controller = async(req,res)=>{
                return res.status(404).json({message: "id does not exist in our records"})
             }
             const password = idExist.password;
-            const confirmpassword = bcrypt.compare(student.password, password)
+            const confirmpassword = await bcrypt.compare(student.password, password)
 
             if(!confirmpassword){
                 return res.status(400).json({message:"password doesn't match"})
@@ -31,7 +31,7 @@ const login_controller = async(req,res)=>{
             process.env.JWT_SECRET_KEY,
             {expiresIn: '3hr'}
         )
-        res.status(202).json({token: token})}
+        res.status(200).json({token: token})}
 
     catch (err) {
         return res.status(500).json(err.message)
