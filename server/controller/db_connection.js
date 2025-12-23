@@ -16,6 +16,11 @@ const connectDB = async () => {
         console.error("Database connection failed", err);
         process.exit(1)
     }
-   
+   finally{
+    mongoose.set('strictQuery', true);
+    mongoose.connection.on('disconnected',()=>{
+        console.log('MongoDB disconnected')
+    });
+   }
 }
 connectDB();

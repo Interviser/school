@@ -11,13 +11,15 @@ const login_controller = async(req,res)=>{
             if(!id){
                 return res.status(400).json({message: "id is required"})
             }
-            const idExist = await login_model.findOne({id:id});
+            const idExist = await login_model.findOne({id:id})
             
 
             if(!idExist){
                return res.status(404).json({message: "id does not exist in our records"})
             }
             const password = idExist.password;
+            const firstName = idExist.firstName;
+            const role = idExist.admin;
             const confirmpassword = await bcrypt.compare(student.password, password)
 
             if(!confirmpassword){
@@ -27,7 +29,10 @@ const login_controller = async(req,res)=>{
         
     
         const token = jwt.sign(
-            {id: id},
+            {id: id ,
+            firstName: firstName,
+            role: role
+            },
             process.env.JWT_SECRET_KEY,
             {expiresIn: '3hr'}
         )

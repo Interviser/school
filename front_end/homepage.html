@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>admin page</title>
-  <style>
+    <title>Document</title>
+    <style>
         body, html {
             margin: 0;
             padding: 0;
@@ -29,6 +29,14 @@
             height: 70px;
             border-radius: 50%;
         }
+        #logout_button {
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 8px;
+            border: none;
+            background-color: none;
+        }
         #for_iframe {
             height: 70%;
             width: 100%;
@@ -45,7 +53,7 @@
             align-items: center;
             background-color: #f0f0f0;
         }
-        button {
+        #annouce, #contact, #test, #history, #timetable {
             width: 18%;
             font-size: 16px;
             cursor: pointer;
@@ -85,6 +93,12 @@
                 height: 50px;
                 border-radius: 50%;
             }
+            #logout_button {
+                margin-top: 8px;
+                padding: 6px 12px;
+                font-size: 12px;
+                background-color: none;
+            }
             #for_iframe {
                 height: 65%;
                 width: 100%;
@@ -104,7 +118,7 @@
                 align-items: center;
                 background-color: #f0f0f0;
             }
-            button {
+            #annouce, #contact, #test, #history, #timetable {
                 width: 18%;
                 font-size: 14px;
                 cursor: pointer;
@@ -133,7 +147,7 @@
 <body>
     <section id="school_logo">
         <div>
-            <img src="./images/CCIS.jpg" alt="School Logo" id="school_crest">
+            <img src="./images/CCIS.jpg" alt="School Logo" loading="lazy" id="school_crest">
             <span>STUDENTS' PORTAL</span>
         </div>
         <div>
@@ -143,10 +157,10 @@
     </section>
     <section id="for_nav">
         <nav>
-            <button id="annouce">Register Student</button>
+            <button id="annouce">Annoucement</button>
             <button id="contact">Contact</button>
-            <button id="test">Register Teacher</button>
-            <button id="history">Add announcement</button>
+            <button id="test">Test</button>
+            <button id="history">History</button>
             <button id="timetable">Timetable</button>
         </nav>
     </section>
@@ -156,16 +170,16 @@
     <script>
         const iframe = document.getElementById('iframe'); 
         document.getElementById('annouce').addEventListener('click', () => {
-            iframe.src = 'http://localhost:3000/signUp.html';
+            iframe.src = 'http://localhost:3000/announcement.html';
         });
         document.getElementById('contact').addEventListener('click', () => {
             iframe.src = 'http://localhost:3000/contact.html';
         }); 
         document.getElementById('test').addEventListener('click', () => {
-            iframe.src = 'http://localhost:3000/registerTeacher.html';
+            iframe.src = 'http://localhost:3000/test.html';
         });
         document.getElementById('history').addEventListener('click', () => {
-            iframe.src = 'http://localhost:3000/announcement.html';
+            iframe.src = 'http://localhost:3000/history.html';
         });
         document.getElementById('timetable').addEventListener('click', () => {
             iframe.src = 'http://localhost:3000/timetable.html';
@@ -198,13 +212,14 @@
             }
         
         }
-       // document.addEventListener('DOMContentLoaded',verifyUser)
+        document.addEventListener('DOMContentLoaded',verifyUser)
         const salutation = document.getElementById('salutation');
         const token = localStorage.getItem('token');
         if (token) {
-          const payload = JSON.parse(atob(token.split('.')[1]));
-          const username = payload.username || 'Admin';
-            salutation.textContent = `Welcome, ${username}! 🙌`;
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            const firstname = payload.firstName;
+            salutation.textContent = `Welcome, ${firstname} 🙌`;
+
         }
 
         const logoutButton = document.getElementById('logout_button');
@@ -216,4 +231,6 @@
         });
         
     </script>
+</body>
+
 </html>

@@ -37,6 +37,10 @@ const student_schema = new mongoose.Schema({
     id:{
         type:String,
         require:true
+    },
+    admin:{
+        type:Boolean,
+        default:false
     }
 
 })

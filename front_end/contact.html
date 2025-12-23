@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./contact.css">
 </head>
 <body>
-    <div>
+    
     <div class="container"><h2><strong>CONTACT CHRIST CARES EXECUTIVES ON THE FOLLOWING PLATFORMS</strong></h2></div>
   </div>
     <div class="container" id="proprietor">
@@ -70,14 +70,7 @@
             </ul>
          </div>
 
-      </div>
-    
-      <button id="return-to-home">return</button>
-      <section>
-        <footer>
-            <marquee behavior="" direction="">THESE CONTENTS ARE THE INFORMATION OF THE SCHOOL LEADERS, CALL FOR HELP OR ENQUIRIES </marquee>
-        </footer>
-      </section>
+     
       
     <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script>
@@ -91,8 +84,12 @@
         const verifyUser = async (e)=> {
             e.preventDefault()
             const token = localStorage.getItem('token')
+            if(!token){
+                return window.location.href = 'login.html'
+            }
+
             try { 
-                const response = await fetch('http://localhost:3000/api/sendData/home',{
+                const response = await fetch('http://localhost:3000/api/auth/',{
                     method: 'GET',
                     headers: {
                        'authorization': `Bearer ${token}`
@@ -101,16 +98,15 @@
                 if(response.ok){
                      return console.log('successfully logged in')
                 }
-             //   else {
-              //      throw new Error('an error occurred')
-//                   window.location.href = 'login.html'
-                    //return console.log('something went wrong')
+                else {
+                    throw new Error('User not authenticated')}
                            
                 }
-            } catch (err) {
+             catch (err) {
                 console.log(err)
                 window.location.href = 'login.html'
             }
+        
         }
         document.addEventListener('DOMContentLoaded',verifyUser)
         

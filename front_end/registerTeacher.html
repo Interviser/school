@@ -101,7 +101,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>REGISTER STUDENT</h1>
+        <h1>REGISTER TEACHER</h1>
         
         <form id="signupForm">
             <div class="form-group">
@@ -240,7 +240,7 @@
             };
             
             try {
-                const response = await fetch('http://localhost:3000/api/signup', {
+                const response = await fetch('http://localhost:3000/api/signupAdmin', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<style>
+    table {
+        margin-top: 5%;
+        width: 100%;
+        border-collapse: collapse;
+        text-align: center;
+    }
+    caption {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    td {
+        padding: 10px;
+    }
+</style>
+<body>
+    <table border="1">
+            <caption>CLASS TIMETABLE FOR JHS 3</caption>
+        <tr>
+            <td>
+                DAY/ PERIOD
+            </td>
+            <td>
+                8:00 - 9:00  
+            </td>
+            <td>
+                9:00 - 10:00
+            </td>
+            <td>
+                10:00 - 10:20  
+            </td>
+            <td>
+                10:20 - 11:20
+            </td>
+            <td>
+                11:20 - 12:20  
+            </td>
+            <td>
+                12:20 - 1:20
+            </td>
+            <td>
+                1:20 - 2:20
+            </td>
+            <td>
+                2:20 - 3:00
+            </td>
+        </tr>
+        <tr>
+            <td>
+                MONDAY
+            </td>
+            <td>
+                SOCIAL STUDIES
+            </td>
+            <td>
+                SOCIAL STUDIES
+            </td>
+            <td>
+                BREAK
+            </td>
+            <td>
+                CAREER TECH.
+            </td>
+            <td>
+                SCIENCE
+            </td>
+            <td>
+               LUNCH BREAK
+            </td>
+            <td>
+                 R.M.E
+            </td>
+            <td>
+                FANTE
+            </td>
+        </tr>
+        <tr>
+            <td>
+                TUESDAY
+            </td>
+            <td>
+               SCIENCE
+            </td>
+            <td>
+                SCIENCE
+            </td>
+            <td>
+                BREAK
+            </td>
+            <td>
+                COMPUTING
+            </td>
+            <td>
+                COMPUTING
+            </td>
+            <td>
+               LUNCH BREAK
+            </td>
+            <td>
+                 ENGLISH
+            </td>
+            <td>
+                ENGLISH
+            </td>
+        </tr>
+        <tr>
+            <td>
+                WEDNESDAY
+            </td>
+            <td>
+              WORSHIP
+            </td>
+            <td>
+                MATHS
+            </td>
+            <td>
+                BREAK
+            </td>
+            <td>
+               R.M.E
+            </td>
+            <td>
+                CAEREER TECH.
+            </td>
+            <td>
+               LUNCH BREAK
+            </td>
+            <td>
+                 SOCIAL STUDIES
+            </td>
+            <td>
+                FANTE
+            </td>
+        </tr>
+        <tr>
+            <td>
+                THURSDAY
+            </td>
+            <td>
+              MATHEMATICS
+            </td>
+            <td>
+                ENGLISH
+            </td>
+            <td>
+                BREAK
+            </td>
+            <td>
+               COMPUTING
+            </td>
+            <td>
+                SCIENCE
+            </td>
+            <td>
+               LUNCH BREAK
+            </td>
+            <td>
+                CAD
+            </td>
+            <td>
+                SCIENCE
+            </td>
+        </tr>
+        <tr>
+            <td>
+                FRIDAY
+            </td>
+            <td>
+              R.M.E
+            </td>
+            <td>
+                ENGLISH
+            </td>
+            <td>
+                BREAK
+            </td>
+            <td>
+              CMF
+            </td>
+            <td>
+                MATHEMATICS
+            </td>
+            <td>
+               LUNCH BREAK
+            </td>
+            <td>
+                 COMPUTING
+            </td>
+            <td>
+                COMPUTING
+            </td>
+    </table>
+     <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+     <script>
+         const verifyUser = async (e)=> {
+            e.preventDefault()
+            const token = localStorage.getItem('token')
+            if(!token){
+                return window.location.href = 'login.html'
+            }
+            
+            try { 
+                const response = await fetch('http://localhost:3000/api/auth/',{
+                    method: 'GET',
+                    headers: {
+                       'authorization': `Bearer ${token}`
+                    }
+                })
+                if(response.ok){
+                     return console.log('successfully logged in')
+                }
+                else {
+                    throw new Error('User not authenticated')}
+                           
+                }
+             catch (err) {
+                console.log(err)
+                window.location.href = 'login.html'
+            }
+        
+        }
+        document.addEventListener('DOMContentLoaded',verifyUser)
+     </script>
+</body>
+</html>

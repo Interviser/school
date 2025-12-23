@@ -20,7 +20,7 @@ const signUp_controller = async (req,res)=>{
        if(password.length < 6){
         return res.status(400).json("password must be at least 6 characters")
        }
-       const no_of_records = await students_model.countDocuments()
+       const no_of_records = await students_model.countDocuments();
        const id = `CCIS/26/${no_of_records+1}`;
        studentsData.id = id;
        const hashedPassword = await bcrypt.hash(password,saltRounds);
@@ -28,7 +28,7 @@ const signUp_controller = async (req,res)=>{
 
        
        const savedData = await studentsData.save();
-       res.status(200).json(savedData)
+       res.status(200).json("signed up successfully");
     }
     catch(err){
         res.status(500).json("internal server error")
