@@ -12,6 +12,11 @@ const noti_schema = new mongoose.Schema({
     date:{
         type:Date,
         default: Date.now()
+    },
+    id:{
+        type:Number,
+        required:true,
+        unique:true
     }
 })
 

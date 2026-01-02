@@ -355,8 +355,8 @@
              const data = await response.json()
              const firstName = data.firstName
             localStorage.setItem('token', data.token)
-            localStorage.setItem('firstname',firstName )
-            if(data.admin){
+            const payload = JSON.parse(atob(data.token.split('.')[1]));
+            if(payload.role === true){
                 return window.location.href = 'http://localhost:3000/admin.html'
             }
             window.location.href = 'http://localhost:3000/homepage.html'

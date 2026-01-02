@@ -4,12 +4,17 @@ const path = require('path');
 const bodyParser = require('body-parser')
 const rateLimiter = require('express-rate-limit');
 
+
+
 require('./controller/db_connection.js');
 const route= require('./routes/signup_routes.js');
 const login_routes = require('./routes/login_routes.js');
 const auth_routes = require('./routes/auth_routes.js'); 
 const signupadmin_routes = require('./routes/signupadmin_routes.js');
 const notification = require('./routes/noti_routes.js')
+const getAnnouncementRoutes = require('./routes/getAnnouncementRoutes.js');
+const editMessageRoutes = require('./routes/editMessageRoutes.js');
+const deleteAnnouncementRoute = require('./routes/deleteAnnouncementRoute.js');
 const cors = require('cors');
 
 const limiter = rateLimiter({
@@ -44,6 +49,9 @@ server.use('/api',login_routes);
 server.use('/api',auth_routes);
 server.use('/api',signupadmin_routes);
 server.use('/api', notification)
+server.use('/api', getAnnouncementRoutes);
+server.use('/api', editMessageRoutes);
+server.use('/api', deleteAnnouncementRoute);
 
 server.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 server.use(express.static(path.join(__dirname,"..","front_end")));

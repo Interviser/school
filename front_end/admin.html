@@ -134,7 +134,7 @@
     <section id="school_logo">
         <div>
             <img src="./images/CCIS.jpg" alt="School Logo" id="school_crest">
-            <span>STUDENTS' PORTAL</span>
+            <span>ADMINS' PORTAL</span>
         </div>
         <div>
             <span id="salutation"></span>
@@ -143,32 +143,32 @@
     </section>
     <section id="for_nav">
         <nav>
-            <button id="annouce">Register Student</button>
+            <button id="register_student">Register Student</button>
             <button id="contact">Contact</button>
-            <button id="test">Register Teacher</button>
-            <button id="history">Add announcement</button>
-            <button id="timetable">Timetable</button>
+            <button id="register_teacher">Register Teacher</button>
+            <button id="add_announcement">Add message</button>
+            <button id="announcements">View message</button>
         </nav>
     </section>
     <section id="for_iframe">
-        <iframe src="announcement.html" frameborder="0" id="iframe"></iframe>
+        <iframe src="add_announcement.html" frameborder="0" id="iframe"></iframe>
     </section>
     <script>
         const iframe = document.getElementById('iframe'); 
-        document.getElementById('annouce').addEventListener('click', () => {
+        document.getElementById('register_student').addEventListener('click', () => {
             iframe.src = 'http://localhost:3000/signUp.html';
         });
         document.getElementById('contact').addEventListener('click', () => {
             iframe.src = 'http://localhost:3000/contact.html';
         }); 
-        document.getElementById('test').addEventListener('click', () => {
+        document.getElementById('register_teacher').addEventListener('click', () => {
             iframe.src = 'http://localhost:3000/registerTeacher.html';
         });
-        document.getElementById('history').addEventListener('click', () => {
+        document.getElementById('announcements').addEventListener('click', () => {
             iframe.src = 'http://localhost:3000/announcement.html';
         });
-        document.getElementById('timetable').addEventListener('click', () => {
-            iframe.src = 'http://localhost:3000/timetable.html';
+        document.getElementById('add_announcement').addEventListener('click', () => {
+            iframe.src = 'http://localhost:3000/add_announcement.html';
         });
         
         const verifyUser = async (e)=> {

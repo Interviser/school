@@ -19,7 +19,7 @@ const verifyToken = (req,res,next)=>{
             process.env.JWT_SECRET_KEY,
         (err,decoded)=>{
             if(err){
-                return res.status(404).json(err)
+                return res.status(404).json("cannot verify")
             }
             req.id =decoded.id
         })
@@ -28,7 +28,7 @@ const verifyToken = (req,res,next)=>{
         next();
     }
     catch(err){
-       return console.log(err)
+       return console.log("an error occurred")
     }
 }
 
@@ -44,7 +44,7 @@ const auth = (verifyToken, async(req,res)=>{
     }
     res.status(200).json(user)
    } catch (err) {
-     return console.log(err)
+     return console.log("an error occurred")
    }
 
 

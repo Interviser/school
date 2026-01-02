@@ -1,9 +1,10 @@
 const bcrypt = require('bcrypt');
-const saltRounds = 14;
 
+ require('dotenv').config();
+const saltRounds= process.env.SALT_ROUNDS;
 const students_model = require('../model/signup_model');
 
-const signUp_controller = async (req,res)=>{
+const signUp_controller = ( async (req,res)=>{
     try{
         const studentsData = new students_model(req.body)
         const {firstName, lastName,emailAddress,password, guardianName, contact} = studentsData;
@@ -33,6 +34,6 @@ const signUp_controller = async (req,res)=>{
     catch(err){
         res.status(500).json("internal server error")
     }
-}
+})
 
 module.exports = signUp_controller;

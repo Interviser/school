@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>view Annoucement</title>
+ <style>
+        body{
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            max-width: 900px;
+            margin-left: calc(calc(100% - 900px) / 2);
+            margin-right: calc(calc(100% - 900px) / 2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+        }
+        h2{
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        #announcement_list{
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .header_style{
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .message_style{
+            color: #555;
+            font-size: 18px;
+            margin-bottom: 30px;
+            white-space: inherit;
+        }
+        .edit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+    </style>    
+</head>
+<body>
+    <h2>Announcements</h2>
+    <div id="announcement_list">
+        
+    </div>
+    
+</body>
+<script>
+    const annouce = document.getElementById('announcement_list')
+    const get_annouce = async (e)=> {
+        const token = localStorage.getItem('token')
+
+        try{
+             const response = await fetch('http://localhost:3000/api/announcements',{
+                method: 'POST',
+                     headers: {
+                       'authorization': `Bearer ${token}`
+                    }
+        })
+        if(response.ok){
+            const data = await response.json()
+            data.forEach(item => {
+                const div = document.createElement('div')
+                div.innerHTML = `<h3 class='header_style'>${item.header.toUpperCase()}</h3><p class="message_style">${item.message}</p>`
+                annouce.appendChild(div)
+            })
+        }
+        else{
+            throw new Error('Failed to fetch announcements')
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+document.addEventListener('DOMContentLoaded',get_annouce)
+</script>
+</html>
