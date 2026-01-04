@@ -159,7 +159,7 @@
         <nav>
             <button id="annouce">Annoucement</button>
             <button id="contact">Contact</button>
-            <button id="test">Test</button>
+            <button id="test">Assignments</button>
             <button id="history">History</button>
             <button id="timetable">Timetable</button>
             <button id="change_password">Change Password</button>
@@ -177,7 +177,7 @@
             iframe.src = 'http://localhost:3000/contact.html';
         }); 
         document.getElementById('test').addEventListener('click', () => {
-            iframe.src = 'http://localhost:3000/test.html';
+            iframe.src = 'http://localhost:3000/Assignments.html';
         });
         document.getElementById('history').addEventListener('click', () => {
             iframe.src = 'http://localhost:3000/history.html';
@@ -207,6 +207,7 @@
                      return console.log('successfully logged in')
                 }
                 else {
+                    window.location.href = 'http://localhost:3000/login.html'
                     throw new Error('User not authenticated')}
                            
                 }
@@ -217,6 +218,8 @@
         
         }
         document.addEventListener('DOMContentLoaded',verifyUser)
+
+
         const salutation = document.getElementById('salutation');
         const token = localStorage.getItem('token');
         if (token) {

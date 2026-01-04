@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignments</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h3 {
+            text-align: center;
+        }
+        #assignmentDetails {
+            max-width: 400px;
+            margin: auto;
+            text-align: center;
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h3>Assignments</h3>
+    <div id="assignmentDetails">
+        <label for="courseSelect">Select Course:</label>
+        <select id="courseSelect">
+           <option value="Mathematics">Mathematics</option>
+            <option value="Science">Science</option>
+            <option value="Social Studies">Social Studies</option>
+            <option value="English">English</option>
+            <option value="C.A.D">C.A.D</option>
+            <option value="R.M.E">R.M.E</option>
+            <option value="Computing">Computing</option>
+            <option value="Career Technology">Career Technology</option>
+        </select>
+        <button id="fetchAssignment">Get Assignment</button>
+    </div>
+    <div id="displayArea" style="margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+    </div>
+
+</body>
+<script>
+    document.getElementById('fetchAssignment').addEventListener('click', async () => {
+        const courseName = document.getElementById('courseSelect').value.trim();
+        try {
+            const response = await fetch(`http://localhost:3000/api/assignments/${courseName}`,{
+                method: 'GET',
+                headers: {
+                    "authorization": `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!response.ok) {
+                throw new Error('No assignment found for the selected course.');
+            }
+            const data = await response.json();
+            console.log(data);
+            const { title, description, dueDate } = data.assignment;
+            const displayArea = document.getElementById('displayArea');
+            displayArea.innerHTML = `
+                <h4>Assignment Details for ${courseName}:</h4>
+                <p><strong>Title:</strong> ${title}</p>
+                <p><strong>Description:</strong> ${description}</p>
+                <p><strong>Due Date:</strong> ${new Date(dueDate).toLocaleDateString()}</p>
+            `;
+        } catch (error) {
+            document.getElementById('displayArea').innerHTML = `<p style="color: red;">${error.message}</p>`;
+        }
+    });
+     const verifyUser = async (e)=> {
+            e.preventDefault()
+            const token = localStorage.getItem('token')
+            if(!token){
+                return window.location.href = 'http://localhost:3000/login.html'
+            }
+            
+            try { 
+                const response = await fetch('http://localhost:3000/api/auth/',{
+                    method: 'GET',
+                    headers: {
+                       'authorization': `Bearer ${token}`
+                    }
+                })
+                if(response.ok){
+                     return console.log('successfully logged in')
+                }
+                else {
+                    window.location.href = 'http://localhost:3000/login.html'
+                    throw new Error('User not authenticated')}
+                           
+                }
+             catch (err) {
+                console.log(err)
+                window.location.href = 'http://localhost:3000/login.html'
+            }
+        
+        }
+        document.addEventListener('DOMContentLoaded',verifyUser)
+</script>
+</html>

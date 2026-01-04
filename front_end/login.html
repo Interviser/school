@@ -335,7 +335,7 @@
             try {
                 if(!username || !password){
                 loadingText.classList.add('loading') = 'none';
-                return  console.log('fill every inputs')
+                return  alert('fill every inputs')
             }
             const response = await fetch("http://localhost:3000/api/login",{
                 method: 'POST',

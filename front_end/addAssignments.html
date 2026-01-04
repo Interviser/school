@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASSIGNMENTS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 500px;
+            margin: auto;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add New Assignment</h1>
+    <form id="assignmentForm">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" required><br><br>
+        
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" required></textarea><br><br>
+        
+        <label for="dueDate">Due Date:</label><br>
+        <input type="date" id="dueDate" name="dueDate" required><br><br>
+        
+        <label for="courseName">Course Name:</label><br>
+        <input type="text" id="courseName" name="courseName" required list="courses"><br><br>
+        <datalist id="courses">
+            <option value="Mathematics">
+            <option value="Science">
+            <option value="Social Studies">
+            <option value="English">
+            <option value="C.A.D">
+            <option value="R.M.E">
+            <option value="Computing">
+            <option value="Career Technology">
+        </datalist>
+        <button type="submit">Add Assignment</button>
+    </form>
+
+    <script>
+        document.getElementById('assignmentForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const dueDate = document.getElementById('dueDate').value;
+            const courseName = document.getElementById('courseName').value;
+
+            const response = await fetch('/api/assignments', {
+                method: 'POST',
+                headers: {
+                    "authorization": `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ title, description, dueDate, courseName })
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert(result.message);
+                // Optionally, reset the form
+                document.getElementById('assignmentForm').reset();
+            } else {
+                alert('Error: ' + result.message);
+            }
+        });
+         const verifyUser = async (e)=> {
+            e.preventDefault()
+            const token = localStorage.getItem('token')
+            if(!token){
+                return window.location.href = 'http://localhost:3000/login.html'
+            }
+            
+            try { 
+                const response = await fetch('http://localhost:3000/api/auth/',{
+                    method: 'GET',
+                    headers: {
+                       'authorization': `Bearer ${token}`
+                    }
+                })
+                if(response.ok){
+                     return console.log('successfully logged in')
+                }
+                else {
+                    window.location.href = 'http://localhost:3000/login.html'
+                    throw new Error('User not authenticated')}
+                           
+                }
+             catch (err) {
+                console.log(err)
+                window.location.href = 'http://localhost:3000/login.html'
+            }
+        
+        }
+        document.addEventListener('DOMContentLoaded',verifyUser)
+    </script>
+    
+</body>
+</html>

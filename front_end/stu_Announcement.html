@@ -92,6 +92,35 @@
         console.log(err)
     }
 }
-document.addEventListener('DOMContentLoaded',get_annouce)
+document.addEventListener('DOMContentLoaded',get_annouce);
+ const verifyUser = async (e)=> {
+            e.preventDefault()
+            const token = localStorage.getItem('token')
+            if(!token){
+                return window.location.href = 'http://localhost:3000/login.html'
+            }
+            
+            try { 
+                const response = await fetch('http://localhost:3000/api/auth/',{
+                    method: 'GET',
+                    headers: {
+                       'authorization': `Bearer ${token}`
+                    }
+                })
+                if(response.ok){
+                     return console.log('successfully logged in')
+                }
+                else {
+                    window.location.href = 'http://localhost:3000/login.html'
+                    throw new Error('User not authenticated')}
+                           
+                }
+             catch (err) {
+                console.log(err)
+                window.location.href = 'http://localhost:3000/login.html'
+            }
+        
+        }
+        document.addEventListener('DOMContentLoaded',verifyUser)
 </script>
 </html>

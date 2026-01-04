@@ -17,6 +17,8 @@ const editMessageRoutes = require('./routes/editMessageRoutes.js');
 const deleteAnnouncementRoute = require('./routes/deleteAnnouncementRoute.js');
 const changePasswordRoutes = require('./routes/changePasswordRoutes.js');
 const changeStuPasswordRoutes = require('./routes/changeStuPasswordRoutes.js');
+const createAssignmentRoutes = require('./routes/assignmentsRoutes.js');
+const getAssignmentsRoutes = require('./routes/getAssignmentsRoutes.js');
 const cors = require('cors');
 
 const limiter = rateLimiter({
@@ -56,6 +58,8 @@ server.use('/api', editMessageRoutes);
 server.use('/api', deleteAnnouncementRoute);
 server.use('/api', changePasswordRoutes);
 server.use('/api', changeStuPasswordRoutes);
+server.use('/api', createAssignmentRoutes);
+server.use('/api', getAssignmentsRoutes);
 
 server.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 server.use(express.static(path.join(__dirname,"..","front_end")));
