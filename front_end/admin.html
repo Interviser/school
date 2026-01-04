@@ -148,6 +148,7 @@
             <button id="register_teacher">Register Teacher</button>
             <button id="add_announcement">Add message</button>
             <button id="announcements">View message</button>
+            <button id="change_password">Change Password</button>
         </nav>
     </section>
     <section id="for_iframe">
@@ -169,6 +170,9 @@
         });
         document.getElementById('add_announcement').addEventListener('click', () => {
             iframe.src = 'http://localhost:3000/add_announcement.html';
+        });
+        document.getElementById('change_password').addEventListener('click', () => {
+            iframe.src = 'http://localhost:3000/changePassword.html';
         });
         
         const verifyUser = async (e)=> {

@@ -162,10 +162,11 @@
             <button id="test">Test</button>
             <button id="history">History</button>
             <button id="timetable">Timetable</button>
+            <button id="change_password">Change Password</button>
         </nav>
     </section>
     <section id="for_iframe">
-        <iframe src="announcement.html" frameborder="0" id="iframe"></iframe>
+        <iframe src="stu_announcement.html" frameborder="0" id="iframe"></iframe>
     </section>
     <script>
         const iframe = document.getElementById('iframe'); 
@@ -183,6 +184,9 @@
         });
         document.getElementById('timetable').addEventListener('click', () => {
             iframe.src = 'http://localhost:3000/timetable.html';
+        });
+        document.getElementById('change_password').addEventListener('click', () => {
+            iframe.src = 'http://localhost:3000/changeStuPassword.html';
         });
         
         const verifyUser = async (e)=> {

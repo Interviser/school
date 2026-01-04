@@ -228,7 +228,7 @@
                 return;
             }
             
-            // Prepare data to send
+            
             const data = {
                 "firstName":firstName,
                "middleName": middleName,
@@ -238,11 +238,13 @@
                 "guardianName": fullName,
                 "contact": contact
             };
-            
+            const token = localStorage.getItem("token")
+            console.log(data)
             try {
                 const response = await fetch('http://localhost:3000/api/signup', {
                     method: 'POST',
                     headers: {
+                        "authorization": `bearer ${token}`,
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(data)
@@ -252,9 +254,9 @@
                 
                 if (response.ok) {
                     alert('Account created successfully! Please log in.');
-                    window.location.href = 'http://localhost:3000/login.html';
+                    
                 } else {
-                    alert('Error: ' + result.message);
+                    alert(response);
                 }
             } catch (error) {
                 console.error('Error:', error);

@@ -15,6 +15,8 @@ const notification = require('./routes/noti_routes.js')
 const getAnnouncementRoutes = require('./routes/getAnnouncementRoutes.js');
 const editMessageRoutes = require('./routes/editMessageRoutes.js');
 const deleteAnnouncementRoute = require('./routes/deleteAnnouncementRoute.js');
+const changePasswordRoutes = require('./routes/changePasswordRoutes.js');
+const changeStuPasswordRoutes = require('./routes/changeStuPasswordRoutes.js');
 const cors = require('cors');
 
 const limiter = rateLimiter({
@@ -52,6 +54,8 @@ server.use('/api', notification)
 server.use('/api', getAnnouncementRoutes);
 server.use('/api', editMessageRoutes);
 server.use('/api', deleteAnnouncementRoute);
+server.use('/api', changePasswordRoutes);
+server.use('/api', changeStuPasswordRoutes);
 
 server.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 server.use(express.static(path.join(__dirname,"..","front_end")));

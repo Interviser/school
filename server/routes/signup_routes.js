@@ -1,6 +1,6 @@
 const exress = require('express');
 const router = exress.Router();
-const verifyToken = require("../middleware/verifyToken")
+const verifyToken = require("../middleware/verifyAdminToken")
 
 const signUp_controller = require('../controller/signup');
 
