@@ -4,7 +4,7 @@ const assignmentsModel = require('../model/assignmentsModel');
 const getAssignments = async (req, res) => {
     try {
         const { courseName } = req.params;
-        const assignment = await assignmentsModel.findOne({ courseName }).sort({ createdAt: -1 }).select('-__v - _id -createdAt');
+        const assignment = await assignmentsModel.findOne({ courseName }).sort({ createdAt: -1 }).select('-__v -_id');
         if (!assignment) {
             return res.status(404).json({ message: 'No assignments found for this course' });
         }

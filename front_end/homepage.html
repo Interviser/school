@@ -118,7 +118,7 @@
                 align-items: center;
                 background-color: #f0f0f0;
             }
-            #annouce, #contact, #test, #history, #timetable {
+            #annouce, #contact, #test, #history, #timetable,#change_password {
                 width: 18%;
                 font-size: 14px;
                 cursor: pointer;
@@ -128,6 +128,12 @@
                 border-radius: 8px;
                 border: none;
             }
+            button:focus {
+                outline: none;
+                box-shadow: 0 0 5px purple;
+                background-color: purple;
+                color: white;
+            }   
             iframe {
                 width: 100%;
                 height: 100%;
@@ -204,7 +210,7 @@
                     }
                 })
                 if(response.ok){
-                     return console.log('successfully logged in')
+                     return 
                 }
                 else {
                     window.location.href = 'http://localhost:3000/login.html'

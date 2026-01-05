@@ -13,7 +13,6 @@ const signUp_controller =  async (req,res) =>{
        
     try{
        const emailExists = await students_model.findOne({emailAddress:emailAddress});
-        console.log(studentsData);
          if(emailExists){
         return res.status(400).json("email already exists")
        }
@@ -26,9 +25,7 @@ const signUp_controller =  async (req,res) =>{
        studentsData.id = generated_id;
        const hashedPassword = await bcrypt.hash(password,14);
        studentsData.password = hashedPassword;
-      const savedData = await studentsData.save();
-
-      console.log(savedData)
+      await studentsData.save();
        res.status(200).json("signed up successfully");
     }
     catch(err){

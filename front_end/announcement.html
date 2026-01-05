@@ -8,7 +8,7 @@
         body{
             font-family: Arial, sans-serif;
             margin: 20px;
-            background-color: #f4f4f4;
+            background-color: white;
             max-width: 900px;
             margin-left: calc(calc(100% - 900px) / 2);
             margin-right: calc(calc(100% - 900px) / 2);
@@ -27,7 +27,7 @@
             margin: 0 auto;
         }
         .header_style{
-            color: #333;
+            color: #d30fb6;
             font-size: 24px;
             margin-bottom: 10px;
         }
@@ -81,7 +81,7 @@
             const data = await response.json()
             data.forEach(item => {
                 const div = document.createElement('div')
-                div.innerHTML = `<h3 class='header_style'>${item.header.toUpperCase()}</h3><p class="message_style">${item.message}</p><hr/> <button id="edit" class="edit-btn">Edit</button> <button id="delete" class="delete-btn">Delete</button>`
+                div.innerHTML = `<h4 class='header_style'>${item.header.toUpperCase()}</h4><p class="message_style">${item.message}</p><hr/> <button id="edit" class="edit-btn">Edit</button> <button id="delete" class="delete-btn">Delete</button>`
                 const editAnnouncement = (id) => {
                     const newHeader = prompt("Enter new header:", item.header);
                     const newMessage = prompt("Enter new message:", item.message);
