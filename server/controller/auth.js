@@ -6,45 +6,17 @@ const auth_model = require('../model/signup_model.js');
 
 
 
-
-const verifyToken = (req,res,next)=>{
-    try{
-        const token = req.headers['authorization'].split(" ")[1]
-        console.log('token sent')
-        if(!token){
-            return res.status(403).json({messagae: 'no token provided'})
-        }
-         jwt.verify(
-            token,
-            process.env.JWT_SECRET_KEY,
-        (err,decoded)=>{
-            if(err){
-                return res.status(404).json("cannot verify")
-            }
-            req.id =decoded.id
-        })
-      
-           
-        next();
-    }
-    catch(err){
-       return console.log("an error occurred")
-    }
-}
-
-
-
-
-const auth = (verifyToken, async(req,res)=>{
-   
+const auth = (async(req,res)=>{
+ 
    try {
     const user = await auth_model.findOne({id: req.id}).select('-password -__v -_id');
     if(!user){
-        return res.status(404).json({message: 'user not found'})
+        console.log(req.id)
+        return res.status(404).json({message: 'user not found', id: req.id})
     }
-    res.status(200).json(user)
+    res.status(200).json("successfully authenticated")
    } catch (err) {
-     return console.log("an error occurred")
+     return res.status(500).json({message: 'internal server error'})
    }
 
 

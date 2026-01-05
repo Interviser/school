@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt');
-const saltRounds = 14;
 
 const verifyToken = (req,res,next)=>{
     try{
@@ -39,7 +38,7 @@ const signUpadmin_controller = (verifyToken, async (req,res)=>{
 
        const emailExists = await students_model.findOne({emailAddress:emailAddress});
 
-           if(emailExists){
+        if(emailExists){
         return res.status(400).json("email already exists")
        }
        
@@ -51,11 +50,11 @@ const signUpadmin_controller = (verifyToken, async (req,res)=>{
        const role = true
        studentsData.id = id;
        studentsData.admin = role;
-       const hashedPassword = await bcrypt.hash(password,saltRounds);
+       const hashedPassword = await bcrypt.hash(password,14);
        studentsData.password = hashedPassword;
 
        
-       const savedData = await studentsData.save();
+        await studentsData.save();
        res.status(200).json("signed up successfully");
     }
     catch(err){
