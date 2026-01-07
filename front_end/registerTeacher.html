@@ -112,7 +112,7 @@
 
             <div class="form-group">
                 <label for="middleName">Middle Name(optional)</label>
-                <input type="text" id="middleName" name="middleName" required>
+                <input type="text" id="middleName" name="middleName">
                 <div id="nameError" class="error"></div>
             </div>
 
@@ -140,16 +140,6 @@
                 <div id="confirmError" class="error"></div>
             </div>
             
-           <!--<div class="form-group">
-                <label for="Class">Class</label>
-                <select id="Class" name="Form" required>
-                    <option value="">Select your class</option>
-                    <option value="JHS 1">JHS 1</option>
-                    <option value="JHS 2">JHS 2</option>
-                    <option value="JHS 3">JHS 3</option>
-                </select>
-            </div>--> 
-
             <div class="form-group">
                 <label for="fullName">Guardian Name(*)</label>
                 <input type="text" id="fullName" name="fullName" required>
@@ -170,6 +160,7 @@
         </div>
     </div>
     <script>
+        const token = localStorage.getItem('token')
         document.getElementById('signupForm').addEventListener('submit', async function(event) {
             event.preventDefault(event);
             
@@ -243,6 +234,7 @@
                 const response = await fetch('http://localhost:3000/api/signupAdmin', {
                     method: 'POST',
                     headers: {
+                        "authorization": `bearer ${token}`,
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(data)
@@ -254,7 +246,7 @@
                     alert('Account created successfully! Please log in.');
                     window.location.href = 'http://localhost:3000/login.html';
                 } else {
-                    alert('Error: ' + result.message);
+                    alert("an error occurred, make sure your email is not already registered");
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -263,7 +255,7 @@
         });
          const verifyUser = async (e)=> {
             e.preventDefault()
-            const token = localStorage.getItem('token')
+            
             if(!token){
                 return window.location.href = 'http://localhost:3000/login.html'
             }

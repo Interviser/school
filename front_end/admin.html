@@ -198,14 +198,19 @@
                     }
                 })
                 if(response.ok){
-                     return 
+                     return (console.log('User authenticated'))
                 }
                 else {
-                    throw new Error('User not authenticated')}
+                       alert(token)
+                      alert(response)
+                      console.log(response)
+                   // throw new Error('User not authenticated')
+                   }
+                 
                            
                 }
              catch (err) {
-                console.log(err)
+                alert(err.message)
                 window.location.href = 'http://localhost:3000/login.html'
             }
         
