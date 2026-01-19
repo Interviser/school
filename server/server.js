@@ -3,6 +3,7 @@ const server = express();
 const path = require('path');
 const bodyParser = require('body-parser')
 const rateLimiter = require('express-rate-limit');
+require('dotenv').config()
 
 
 
@@ -22,24 +23,24 @@ const getAssignmentsRoutes = require('./routes/getAssignmentsRoutes.js');
 const cors = require('cors');
 
 const limiter = rateLimiter({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 300, // limit each IP to 100 requests per windowMs
+    windowMs: 15 * 60 * 1000, 
+    max: 200, 
     message: "Too many requests from this IP, please try again after 15 minutes", 
-    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+    standardHeaders: true, 
+    legacyHeaders: false, 
 });
 
 
 
 
 const corsOptoions = {
-    origin: 'http://localhost:3000',
+    origin: process.env.SERVER_URL,
     methods: ['GET','POST','PUT','DELETE'],
     Credentials: true,
 }
 
 
-require('dotenv').config()
+
 server.use(limiter);
 server.use(cors(corsOptoions));
 server.use(bodyParser.json(corsOptoions));
