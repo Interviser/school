@@ -94,7 +94,9 @@
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({ header: header, message: message })
+                        
                     });
+                    document.querySelector('form').reset();
                 } else {
                     alert('Please fill in both fields.');
                 }
