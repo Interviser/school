@@ -1,7 +1,6 @@
 
 const noti_model = require("../model/notifications_model");
-const nodeCache = require('node-cache');
-const cache = new nodeCache({ stdTTL: 300, checkperiod: 320 });
+const { cache } = require('../middleware/cacheGetAnnouncements');
 
 
 const getAnnouncement =  async (req, res) => {

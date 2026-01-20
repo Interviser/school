@@ -1,4 +1,5 @@
 const noti_model = require('../model/notifications_model');
+const {cache} = require('../middleware/cacheGetAnnouncements');
 const deleteAnnouncement = async (req, res) => {
     const id = req.params.id;
     if (!id.trim()) {
@@ -7,7 +8,10 @@ const deleteAnnouncement = async (req, res) => {
     try {
         const deletedAnnouncement = await noti_model.findByIdAndDelete(id);
         if (deletedAnnouncement) {
-            return res.status(200).json({ message: "Announcement deleted successfully" });
+            const announcements = await noti_model.find().sort({ createdAt: -1 }).select('-__v');
+            cache.set('announcements', announcements);
+            return res.status(200).json({ message: "Announcement deleted successfully" }); 
+            
         } else {
             return res.status(404).json({ message: "Announcement not found" });
         }
