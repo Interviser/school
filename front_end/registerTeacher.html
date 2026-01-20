@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
     <title>Student Sign Up</title>
     <style>
         * {
@@ -156,9 +157,10 @@
         </form>
         
         <div class="login-link">
-            Already have an account? <a href="http://localhost:3000/login.html">Log in</a>
+            Already have an account? <a href="login.html">Log in</a>
         </div>
     </div>
+     <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script>
         const token = localStorage.getItem('token')
         document.getElementById('signupForm').addEventListener('submit', async function(event) {
@@ -231,7 +233,7 @@
             };
             
             try {
-                const response = await fetch('http://localhost:3000/api/signupAdmin', {
+                const response = await fetch('api/signupAdmin', {
                     method: 'POST',
                     headers: {
                         "authorization": `bearer ${token}`,
@@ -257,11 +259,11 @@
             e.preventDefault()
             
             if(!token){
-                return window.location.href = 'http://localhost:3000/login.html'
+                return window.location.href = 'login.html'
             }
             
             try { 
-                const response = await fetch('http://localhost:3000/api/auth/',{
+                const response = await fetch('api/auth/',{
                     method: 'GET',
                     headers: {
                        'authorization': `Bearer ${token}`
@@ -271,13 +273,13 @@
                      return 
                 }
                 else {
-                    window.location.href = 'http://localhost:3000/login.html'
+                    window.location.href = 'login.html'
                     throw new Error('User not authenticated')}
                            
                 }
              catch (err) {
                 console.log(err)
-                window.location.href = 'http://localhost:3000/login.html'
+                window.location.href = 'login.html'
             }
         
         }

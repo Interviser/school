@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
     <title>view Annoucement</title>
  <style>
         body{
@@ -65,13 +66,14 @@
     </div>
     
 </body>
+ <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 <script>
     const annouce = document.getElementById('announcement_list')
     const get_annouce = async (e)=> {
         const token = localStorage.getItem('token')
 
         try{
-             const response = await fetch('http://localhost:3000/api/announcements',{
+             const response = await fetch('api/announcements',{
                 method: 'POST',
                      headers: {
                        'authorization': `Bearer ${token}`
@@ -97,11 +99,11 @@ document.addEventListener('DOMContentLoaded',get_annouce);
             e.preventDefault()
             const token = localStorage.getItem('token')
             if(!token){
-                return window.location.href = 'http://localhost:3000/login.html'
+                return window.location.href = 'login.html'
             }
             
             try { 
-                const response = await fetch('http://localhost:3000/api/auth/',{
+                const response = await fetch('api/auth/',{
                     method: 'GET',
                     headers: {
                        'authorization': `Bearer ${token}`
@@ -111,13 +113,13 @@ document.addEventListener('DOMContentLoaded',get_annouce);
                      return 
                 }
                 else {
-                    window.location.href = 'http://localhost:3000/login.html'
+                    window.location.href = 'login.html'
                     throw new Error('User not authenticated')}
                            
                 }
              catch (err) {
                 console.log(err)
-                window.location.href = 'http://localhost:3000/login.html'
+                window.location.href = 'login.html'
             }
         
         }

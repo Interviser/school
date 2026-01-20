@@ -87,7 +87,7 @@
                 if(header && message) {
                     
                     alert('Announcement Sent:\n\n' + 'Header: ' + header + '\nMessage: ' + message);
-                    const res = fetch('http://localhost:3000/api/noti', {
+                    const res = fetch('api/noti', {
                         method: 'POST',
                         headers: {
                             'authorization': `Bearer ${token}`,
@@ -106,11 +106,11 @@
             e.preventDefault()
             const token = localStorage.getItem('token')
             if(!token){
-                return window.location.href = 'http://localhost:3000/login.html'
+                return window.location.href = 'login.html'
             }
             
             try { 
-                const response = await fetch('http://localhost:3000/api/auth/',{
+                const response = await fetch('api/auth/',{
                     method: 'GET',
                     headers: {
                        'authorization': `Bearer ${token}`
@@ -120,13 +120,13 @@
                      return
                 }
                 else {
-                    window.location.href = 'http://localhost:3000/login.html'
+                    window.location.href = 'login.html'
                     throw new Error('User not authenticated')}
                            
                 }
              catch (err) {
 
-                window.location.href = 'http://localhost:3000/login.html'
+                window.location.href = 'login.html'
             }
         
         }
