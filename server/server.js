@@ -3,6 +3,7 @@ const server = express();
 const path = require('path');
 const bodyParser = require('body-parser')
 const rateLimiter = require('express-rate-limit');
+const cookieParser = require('cookie-parser');
 require('dotenv').config()
 
 
@@ -47,6 +48,7 @@ server.use(bodyParser.json(corsOptoions));
 server.use(bodyParser.urlencoded({extended: true, limit: '5mb'}));
 server.use(express.json({limit: '5mb'}));
 server.use(express.urlencoded({extended: true}));
+server.use(cookieParser());
 
 
 server.use('/api',route);

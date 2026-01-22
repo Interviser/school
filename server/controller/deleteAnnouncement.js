@@ -1,8 +1,10 @@
 const noti_model = require('../model/notifications_model');
 const {cache} = require('../middleware/cacheGetAnnouncements');
+const sanitize = require('mongo-sanitize');
 const deleteAnnouncement = async (req, res) => {
-    const id = req.params.id;
-    if (!id.trim()) {
+    const id = sanitize(req.params._id);
+    if (!id) {
+        console.log(id)
         return res.status(400).json({ message: "Announcement ID is required" });
     }
     try {

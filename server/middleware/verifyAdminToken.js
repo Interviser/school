@@ -3,12 +3,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const verifyToken = (req,res,next)=>{
-     const authorizationHeader = req.headers['authorization'];
-        if (!authorizationHeader) {
-            return  res.status(403).json({ message: 'No authorization header provided' });
-        }
 
-        const token = authorizationHeader.split(" ")[1]
+        const token = req.cookies.token
         
         if(!token){
             return res.status(403).json({message: 'no token provided'})

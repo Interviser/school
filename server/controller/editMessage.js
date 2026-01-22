@@ -1,7 +1,10 @@
-const editMessage = async (req, res) => {
 const noti_model = require("../model/notifications_model");
-const {cache}= require("../middleware/cacheGetAnnouncements")
-    const _id = req.params.id;
+const {cache}= require("../middleware/cacheGetAnnouncements");
+const sanitize = require("mongo-sanitize");
+
+const editMessage = async (req, res) => {
+
+    const _id = sanitize(req.params._id);
    
     const { header, message } = req.body || {}
     if (!header || !message || header.trim() === '' || message.trim() === '') {

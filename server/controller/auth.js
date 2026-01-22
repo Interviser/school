@@ -1,20 +1,17 @@
 
-const jwt = require('jsonwebtoken')
-require('dotenv').config()
-
+ const sanitize = require('mongo-sanitize');
 const auth_model = require('../model/signup_model.js');
 
 
-
 const auth = (async(req,res)=>{
+  const userId = sanitize(req.id);
  
    try {
-    const user = await auth_model.findOne({id: req.id}).select('-password -__v -_id');
+    const user = await auth_model.findOne({id: userId}).select('-password -__v -_id');
     if(!user){
-        console.log(req.id)
-        return res.status(404).json({message: 'user not found', id: req.id})
+        return res.status(404).json({message: 'user not found'})
     }
-    res.status(200).json("successfully authenticated")
+    res.status(200).json(user)
    } catch (err) {
      return res.status(500).json({message: 'internal server error'})
    }
