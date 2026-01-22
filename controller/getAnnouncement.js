@@ -1,12 +1,13 @@
 
 const noti_model = require("../model/notifications_model");
 const { cache } = require('../middleware/cacheGetAnnouncements');
+require('dotenv').config();
 
 
 const getAnnouncement =  async (req, res) => {
     try {
         const announcements = await noti_model.find().sort({ createdAt: -1 }).select('-__v');
-        cache.set('announcements', announcements);
+        cache.set(process.env.ANNOUNCEMENT_KEY, announcements);
         res.status(200).json(announcements);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching announcements', error });

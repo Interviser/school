@@ -1,6 +1,7 @@
 const noti_model = require('../model/notifications_model');
 const {cache} = require('../middleware/cacheGetAnnouncements');
 const sanitize = require('mongo-sanitize');
+require('dotenv').config();
 const deleteAnnouncement = async (req, res) => {
     const id = sanitize(req.params._id);
     if (!id) {
@@ -11,7 +12,7 @@ const deleteAnnouncement = async (req, res) => {
         const deletedAnnouncement = await noti_model.findByIdAndDelete(id);
         if (deletedAnnouncement) {
             const announcements = await noti_model.find().sort({ createdAt: -1 }).select('-__v');
-            cache.set('announcements', announcements);
+            cache.set(process.env.ANNOUNCEMENT_KEY, announcements);
             return res.status(200).json({ message: "Announcement deleted successfully" }); 
             
         } else {

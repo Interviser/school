@@ -1,6 +1,7 @@
 const noti_model = require("../model/notifications_model");
 const {cache}= require("../middleware/cacheGetAnnouncements");
 const sanitize = require("mongo-sanitize");
+require('dotenv').config();
 
 const editMessage = async (req, res) => {
 
@@ -21,7 +22,7 @@ const editMessage = async (req, res) => {
         }
         res.status(200).json({ message: 'Announcement updated successfully' });
         const announcements = await noti_model.find().sort({ createdAt: -1 }).select('-__v');
-        cache.set('announcements', announcements);
+        cache.set(process.env.ANNOUNCEMENT_KEY, announcements);
     } catch (error) {
         res.status(500).json({ message: 'Error editing announcement'});
     }}
