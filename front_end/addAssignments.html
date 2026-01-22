@@ -81,10 +81,10 @@
             const response = await fetch('/api/assignments', {
                 method: 'POST',
                 headers: {
-                    "authorization": `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ title, description, dueDate, courseName })
+                body: JSON.stringify({ title, description, dueDate, courseName }),
+                credentials: 'include'
             });
 
             const result = await response.json();
@@ -98,29 +98,23 @@
         });
          const verifyUser = async (e)=> {
             e.preventDefault()
-            const token = localStorage.getItem('token')
-            if(!token){
-                return window.location.href = 'http://localhost:3000/login.html'
-            }
+         
             
             try { 
-                const response = await fetch('http://localhost:3000/api/auth/',{
+                const response = await fetch('api/auth/',{
                     method: 'GET',
-                    headers: {
-                       'authorization': `Bearer ${token}`
-                    }
+                   credentials: 'include'
                 })
                 if(response.ok){
                      return 
                 }
                 else {
-                    window.location.href = 'http://localhost:3000/login.html'
+                    window.location.href = 'login.html'
                     throw new Error('User not authenticated')}
                            
                 }
              catch (err) {
-                console.log(err)
-                window.location.href = 'http://localhost:3000/login.html'
+                window.location.href = 'login.html'
             }
         
         }

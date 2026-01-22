@@ -351,20 +351,30 @@
                 alert('invalid username or password')
             }
            else{
-            loadingText.style.display = 'none';
-             const data = await response.json()
-             const firstName = data.firstName
-            localStorage.setItem('token', data.token)
-            const payload = JSON.parse(atob(data.token.split('.')[1]));
-            if(payload.role === true){
-                return window.location.href = 'admin.html'
-            }
-            window.location.href = 'homepage.html'
+           const response = await fetch('api/auth',{
+            method: 'GET',
+            credentials: 'include'
+              })
+              if(!response.ok){
+                loadingText.style.display = 'none';
+                return window.location.href = 'login.html'
+              }
+              const payload = await response.json();
+              const{firstName, admin,id} = payload
+              
+                localStorage.setItem('firstName', firstName)
+                localStorage.setItem('admin', admin)
+                localStorage.setItem('userId', id)
+                
+              if(admin === true){
+                    return window.location.href = 'admin.html'
+                }
+                window.location.href = 'homepage.html'
            }
         }
              catch (err) {
                 loadingText.style.display = 'none';
-                console.log(err)
+               alert('An error occurred. Please try again later.');
             }
         }
         form.addEventListener('submit', verifyInputs)

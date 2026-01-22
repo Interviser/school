@@ -235,14 +235,14 @@
                 const response = await fetch('api/signup', {
                     method: 'POST',
                     headers: {
-                        "authorization": `bearer ${token}`,
+                        
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(data),
+                    credentials: 'include'
                 });
                 
-                const result = await response.json();
-                
+              
                 if (response.ok) {
                     alert('Account created successfully! Please log in.');
                     
@@ -250,23 +250,18 @@
                     alert(response);
                 }
             } catch (error) {
-                console.error('Error:', error);
+               
                 alert('An error occurred. Please try again later.');
             }
         });
          const verifyUser = async (e)=> {
             e.preventDefault()
-            const token = localStorage.getItem('token')
-            if(!token){
-                return window.location.href = 'login.html'
-            }
+           
             
             try { 
                 const response = await fetch('api/auth/',{
                     method: 'GET',
-                    headers: {
-                       'authorization': `Bearer ${token}`
-                    }
+                    credentials: 'include'
                 })
                 if(response.ok){
                      return
@@ -277,7 +272,7 @@
                            
                 }
              catch (err) {
-                console.log(err)
+               
                 window.location.href = 'login.html'
             }
         

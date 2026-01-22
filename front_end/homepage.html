@@ -199,17 +199,11 @@
         
         const verifyUser = async (e)=> {
             e.preventDefault()
-            const token = localStorage.getItem('token')
-            if(!token){
-                return window.location.href = 'login.html'
-            }
             
             try { 
                 const response = await fetch('api/auth/',{
                     method: 'GET',
-                    headers: {
-                       'authorization': `Bearer ${token}`
-                    }
+                    credentials: 'include'
                 })
                 if(response.ok){
                      return 
@@ -220,7 +214,6 @@
                            
                 }
              catch (err) {
-                console.log(err)
                 window.location.href = 'login.html'
             }
         
@@ -229,13 +222,8 @@
 
 
         const salutation = document.getElementById('salutation');
-        const token = localStorage.getItem('token');
-        if (token) {
-            const payload = JSON.parse(atob(token.split('.')[1]));
-            const firstname = payload.firstName;
-            salutation.textContent = `Welcome, ${firstname} 🙌`;
-
-        }
+        const firstName = localStorage.getItem('firstName');
+        salutation.textContent = `Welcome, ${firstName} 🙌`;
 
         const logoutButton = document.getElementById('logout_button');
         logoutButton.addEventListener('click', () => {

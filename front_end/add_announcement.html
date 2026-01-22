@@ -70,14 +70,13 @@
     <script href="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script>
         try {
-            document.querySelector('form').addEventListener('submit', function(event) {
+            document.querySelector('form').addEventListener('submit', async function (event) {
                 event.preventDefault();
                 const header = document.getElementById('header').value;
                 const message = document.getElementById('message').value;
-                const token = localStorage.getItem('token');
+                const admin = localStorage.getItem('admin');
 
-                 const payload = JSON.parse(atob(token.split('.')[1]));
-                 const admin = payload.role;
+                 
 
                  if(!admin) {
                      alert('Only admins can send announcements.');
@@ -87,13 +86,13 @@
                 if(header && message) {
                     
                     alert('Announcement Sent:\n\n' + 'Header: ' + header + '\nMessage: ' + message);
-                    const res = fetch('api/noti', {
+                    const res = await fetch('api/noti', {
                         method: 'POST',
                         headers: {
-                            'authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ header: header, message: message })
+                        body: JSON.stringify({ header: header, message: message }),
+                        credentials: 'include'
                         
                     });
                     document.querySelector('form').reset();
@@ -102,21 +101,16 @@
                 }
             });
         } catch (error) {
-            console.error('Error attaching form submit handler:', error);
+            console.log('Error attaching form submit handler:', error);
         }
          const verifyUser = async (e)=> {
             e.preventDefault()
-            const token = localStorage.getItem('token')
-            if(!token){
-                return window.location.href = 'login.html'
-            }
+           
             
             try { 
                 const response = await fetch('api/auth/',{
                     method: 'GET',
-                    headers: {
-                       'authorization': `Bearer ${token}`
-                    }
+                    credentials: 'include'
                 })
                 if(response.ok){
                      return

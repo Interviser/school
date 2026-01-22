@@ -187,20 +187,14 @@
         
         const verifyUser = async (e)=> {
             e.preventDefault()
-            const token = localStorage.getItem('token')
-            if(!token){
-                return window.location.href = 'login.html'
-            }
             
             try { 
                 const response = await fetch('api/auth/',{
                     method: 'GET',
-                    headers: {
-                       'authorization': `Bearer ${token}`
-                    }
+                    credentials: 'include'
                 })
                 if(response.ok){
-                     return (console.log('User authenticated'))
+                     return
                 }
                 else {
                     throw new Error('User not authenticated')
@@ -209,18 +203,15 @@
                            
                 }
              catch (err) {
-                alert(err.message)
-                window.location.href = 'http://localhost:3000/login.html'
+                window.location.href = '/login.html'
             }
         
         }
        document.addEventListener('DOMContentLoaded',verifyUser)
         const salutation = document.getElementById('salutation');
-        const token = localStorage.getItem('token');
-        if (token) {
-          const payload = JSON.parse(atob(token.split('.')[1]));
-          const username = payload.username || 'Admin';
-            salutation.textContent = `Welcome, ${username}! 🙌`;
+        const firstName = localStorage.getItem('firstName');
+        if (firstName) {
+            salutation.textContent = `Welcome, ${firstName}! 🙌`;
         }
 
         const logoutButton = document.getElementById('logout_button');
@@ -228,7 +219,7 @@
             const confirmLogout = confirm('Are you sure you want to logout?');
             if (!confirmLogout) return;
             localStorage.removeItem('token');
-            window.location.href = 'http://localhost:3000/login.html';
+            window.location.href = 'login.html';
         });
         
     </script>

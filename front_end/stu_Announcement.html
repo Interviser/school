@@ -70,14 +70,15 @@
 <script>
     const annouce = document.getElementById('announcement_list')
     const get_annouce = async (e)=> {
-        const token = localStorage.getItem('token')
+       
 
         try{
              const response = await fetch('api/announcements',{
                 method: 'POST',
                      headers: {
-                       'authorization': `Bearer ${token}`
-                    }
+                       'content-type': 'application/json',
+                    },
+                    credentials: 'include'
         })
         if(response.ok){
             const data = await response.json()
@@ -97,17 +98,12 @@
 document.addEventListener('DOMContentLoaded',get_annouce);
  const verifyUser = async (e)=> {
             e.preventDefault()
-            const token = localStorage.getItem('token')
-            if(!token){
-                return window.location.href = 'login.html'
-            }
+            
             
             try { 
                 const response = await fetch('api/auth/',{
                     method: 'GET',
-                    headers: {
-                       'authorization': `Bearer ${token}`
-                    }
+                   credentials: 'include'
                 })
                 if(response.ok){
                      return 
@@ -118,7 +114,7 @@ document.addEventListener('DOMContentLoaded',get_annouce);
                            
                 }
              catch (err) {
-                console.log(err)
+               
                 window.location.href = 'login.html'
             }
         

@@ -211,9 +211,7 @@
             try { 
                 const response = await fetch('api/auth/',{
                     method: 'GET',
-                    headers: {
-                       'authorization': `Bearer ${token}`
-                    }
+                   credentials: 'include'
                 })
                 if(response.ok){
                      return
@@ -223,7 +221,7 @@
                      window.location.href = 'login.html'
                 }
              catch (err) {
-                console.log(err)
+               
                 window.location.href = 'login.html'
             }
         

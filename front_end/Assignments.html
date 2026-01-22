@@ -88,19 +88,14 @@
             document.getElementById('displayArea').innerHTML = `<p style="color: red;">${error.message}</p>`;
         }
     });
-     const verifyUser = async (e)=> {
+    const verifyUser = async (e)=> {
             e.preventDefault()
-            const token = localStorage.getItem('token')
-            if(!token){
-                return window.location.href = 'login.html'
-            }
+         
             
             try { 
                 const response = await fetch('api/auth/',{
                     method: 'GET',
-                    headers: {
-                       'authorization': `Bearer ${token}`
-                    }
+                   credentials: 'include'
                 })
                 if(response.ok){
                      return 
@@ -111,7 +106,6 @@
                            
                 }
              catch (err) {
-                console.log(err)
                 window.location.href = 'login.html'
             }
         
