@@ -165,7 +165,7 @@
     <section id="for_nav">
         <nav>
             <button id="annouce">Annoucement</button>
-            <button id="contact">Contact</button>
+           <!-- <button id="contact">Contact</button> -->
             <button id="test">Assignments</button>
             <button id="history">History</button>
             <button id="timetable">Timetable</button>
@@ -181,9 +181,9 @@
         document.getElementById('annouce').addEventListener('click', () => {
             iframe.src = 'stu_announcement.html';
         });
-        document.getElementById('contact').addEventListener('click', () => {
+       /* document.getElementById('contact').addEventListener('click', () => {
             iframe.src = 'contact.html';
-        }); 
+        }); */
         document.getElementById('test').addEventListener('click', () => {
             iframe.src = 'Assignments.html';
         });
@@ -229,8 +229,20 @@
         logoutButton.addEventListener('click', () => {
             const confirmLogout = confirm('Are you sure you want to logout?');
             if (!confirmLogout) return;
-            localStorage.removeItem('token');
-            window.location.href = 'login.html';
+            fetch('api/logout', {
+                method: 'POST',
+                credentials: 'include'
+            }).then(response => {
+                if (response.ok) {
+                    localStorage.clear();
+                    window.location.href = 'login.html';
+                } else {
+                    alert('Logout failed. Please try again.');
+                }
+            }).catch(error => {
+                
+                alert('An error occurred. Please try again.');
+            });
         });
         
     </script>

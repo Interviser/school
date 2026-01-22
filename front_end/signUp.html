@@ -245,6 +245,7 @@
               
                 if (response.ok) {
                     alert('Account created successfully! Please log in.');
+                    document.getElementById('signupForm').reset();
                     
                 } else {
                     alert(response);

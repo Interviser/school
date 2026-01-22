@@ -162,7 +162,7 @@
     </div>
      <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script>
-        const token = localStorage.getItem('token')
+       
         document.getElementById('signupForm').addEventListener('submit', async function(event) {
             event.preventDefault(event);
             
@@ -246,7 +246,8 @@
                
                 
                 if (response.ok) {
-                    alert('Account created successfully! Please log in.');
+                    alert('Account created successfully!');
+                     document.getElementById('signupForm').reset();
                     
                 } else {
                     alert("an error occurred, make sure your email is not already registered");
