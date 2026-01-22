@@ -67,7 +67,7 @@ server.use('/api', getAssignmentsRoutes);
 server.use('/api', logOutRoutes);
 
 server.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
-server.use(express.static(path.join(__dirname,"..","front_end")));
+server.use(express.static(path.join(__dirname,"front_end")));
 
 
 
