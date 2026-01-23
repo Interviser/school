@@ -75,7 +75,16 @@ server.use((req, res, next)=>{
     res.set('Expires', '0');
     next()
 })
+const protect = (req,res,next)=>{
+    const token = req.cookies.token
+    if(!token){
+        return res.redirect('/login.html')
+    }
+    next()
+}
+
 server.use(express.static(path.join(__dirname,"front_end")));
+server.use(protect,express.static(path.join(__dirname,'private')))
 
 
 
