@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <title>admin page</title>
+    <script>
+          const verifyUser = async (e)=> {
+            e.preventDefault()
+            
+            try { 
+                const response = await fetch('api/auth/',{
+                    method: 'GET',
+                    credentials: 'include'
+                })
+                if(response.ok){
+                     return
+                }
+                else {
+                    window.location.replace('/login.html')
+                    throw new Error('User not authenticated')
+                   }
+                 
+                           
+                }
+             catch (err) {
+                window.location.replace('/login.html')
+            }
+        
+        }
+    </script>
+  <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+        }
+        @media (min-width:768px) {
+            #school_logo {
+            height: 14%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            background-color: purple;
+            color: white;
+        }
+        #school_crest {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+        }
+        #for_iframe {
+            height: 70%;
+            width: 100%;
+        }
+        #for_nav {
+            height: 8%;
+            width: 100%;
+        }
+        nav {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+        button {
+            width: 18%;
+            font-size: 16px;
+            cursor: pointer;
+            height: 60%;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            border: none;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        button:hover {
+            background-color: purple;
+            color: white;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        }
+        @media (max-width:767px) {
+            #school_logo {
+                height: 20%;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                background-color: purple;
+                color: white;
+                padding: 10px 0;
+            }
+            #school_crest {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+            }
+            #for_iframe {
+                height: 65%;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            #for_nav {
+                height: 10%;
+                width: 100%;
+            }
+            nav {
+                height: 100%;
+                width: 100%;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                background-color: #f0f0f0;
+                overflow-x: auto;
+            }
+            button {
+                width: 18%;
+                font-size: 14px;
+                cursor: pointer;
+                height: 60%;
+                justify-content: center;
+                align-items: center;
+                border-radius: 8px;
+                border: none;
+            }
+            iframe {
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
+            button:hover {
+                background-color: purple;
+                color: white;
+            }
+            button:active {
+                transform: scale(0.98);
+            }
+        }
+        button:focus {
+            outline: none;
+            background-color: blueviolet;
+        }
+        #logout_button {
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            background-color: none;
+            width: auto;
+            height: auto;
+        }
+        
+    </style>
+</head>
+<body>
+    <section id="school_logo">
+        <div>
+            <img src="./images/CCIS.jpg" alt="School Logo" id="school_crest">
+            <span>ADMINS' PORTAL</span>
+        </div>
+        <div>
+            <span id="salutation"></span>
+            <button id="logout_button">Logout</button>
+        </div>
+    </section>
+    <section id="for_nav">
+        <nav>
+            <button id="register_student">Register Student</button>
+           <!-- <button id="contact">Contact</button> -->
+            <button id="register_teacher">Register Teacher</button>
+            <button id="add_announcement">Add message</button>
+            <button id="announcements">View message</button>
+            <button id="change_password">Change Password</button>
+            <button id="manage_assignments">Assignments</button>
+        </nav>
+    </section>
+    <section id="for_iframe">
+        <iframe src="add_announcement.html" frameborder="0" id="iframe"></iframe>
+    </section>
+     <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script>
+        const iframe = document.getElementById('iframe'); 
+        document.getElementById('register_student').addEventListener('click', () => {
+            iframe.src = 'signUp.html';
+        });
+       /* document.getElementById('contact').addEventListener('click', () => {
+            iframe.src = 'contact.html';
+        }); */
+        document.getElementById('register_teacher').addEventListener('click', () => {
+            iframe.src = 'registerTeacher.html';
+        });
+        document.getElementById('announcements').addEventListener('click', () => {
+            iframe.src = 'announcement.html';
+        });
+        document.getElementById('add_announcement').addEventListener('click', () => {
+            iframe.src = 'add_announcement.html';
+        });
+        document.getElementById('change_password').addEventListener('click', () => {
+            iframe.src = 'changePassword.html';
+        });
+        document.getElementById('manage_assignments').addEventListener('click', () => {
+            iframe.src = 'addAssignments.html';
+        });
+        
+      
+      // document.addEventListener('DOMContentLoaded',verifyUser)
+        const salutation = document.getElementById('salutation');
+        const firstName = localStorage.getItem('firstName');
+        if (firstName) {
+            salutation.textContent = `Welcome, ${firstName}! 🙌`;
+        }
+
+        const logoutButton = document.getElementById('logout_button');
+        logoutButton.addEventListener('click', () => {
+            const confirmLogout = confirm('Are you sure you want to logout?');
+            if (!confirmLogout) return;
+           fetch('api/logout', {
+                method: 'POST',
+                credentials: 'include'
+            }).then(response => {
+                if (response.ok) {
+                    window.location.replace('login.html');
+                     localStorage.removeItem('firstName');
+                    localStorage.removeItem('userId');
+                    localStorage.removeItem('role');
+                } else {
+                    alert('Logout failed. Please try again.');
+                   
+                }
+            }).catch(error => {
+                
+                alert('An error occurred. Please try again.');
+            });
+        });
+        
+    </script>
+</html>

@@ -367,9 +367,9 @@
                 localStorage.setItem('userId', id)
                 
               if(admin === true){
-                    return window.location.href = 'admin.html'
+                    return window.location.replace("admin.html")
                 }
-                window.location.href = 'homepage.html'
+                window.location.replace("admin.html")
            }
         }
              catch (err) {

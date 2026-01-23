@@ -22,6 +22,7 @@ const changeStuPasswordRoutes = require('./routes/changeStuPasswordRoutes.js');
 const createAssignmentRoutes = require('./routes/assignmentsRoutes.js');
 const getAssignmentsRoutes = require('./routes/getAssignmentsRoutes.js');
 const logOutRoutes = require('./routes/logOutRoutes.js');
+const serveAdminRoute = require('./routes/serveAdminRoute.js');
 const cors = require('cors');
 
 const limiter = rateLimiter({
@@ -65,6 +66,7 @@ server.use('/api', changeStuPasswordRoutes);
 server.use('/api', createAssignmentRoutes);
 server.use('/api', getAssignmentsRoutes);
 server.use('/api', logOutRoutes);
+server.use('/api', serveAdminRoute);
 
 server.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 server.use(express.static(path.join(__dirname,"front_end")));
