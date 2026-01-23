@@ -238,6 +238,9 @@
                     window.location.href = 'login.html';
                 } else {
                     alert('Logout failed. Please try again.');
+                     localStorage.removeItem('firstName');
+                    localStorage.removeItem('userId');
+                    localStorage.removeItem('role');
                 }
             }).catch(error => {
                 

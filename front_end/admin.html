@@ -5,6 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
     <title>admin page</title>
+    <script>
+          const verifyUser = async (e)=> {
+            e.preventDefault()
+            
+            try { 
+                const response = await fetch('api/auth/',{
+                    method: 'GET',
+                    credentials: 'include'
+                })
+                if(response.ok){
+                     return
+                }
+                else {
+                    throw new Error('User not authenticated')
+                   }
+                 
+                           
+                }
+             catch (err) {
+                window.location.href = '/login.html'
+            }
+        
+        }
+    </script>
   <style>
         body, html {
             margin: 0;
@@ -195,29 +219,8 @@
             iframe.src = 'addAssignments.html';
         });
         
-        const verifyUser = async (e)=> {
-            e.preventDefault()
-            
-            try { 
-                const response = await fetch('api/auth/',{
-                    method: 'GET',
-                    credentials: 'include'
-                })
-                if(response.ok){
-                     return
-                }
-                else {
-                    throw new Error('User not authenticated')
-                   }
-                 
-                           
-                }
-             catch (err) {
-                window.location.href = '/login.html'
-            }
-        
-        }
-       document.addEventListener('DOMContentLoaded',verifyUser)
+      
+      // document.addEventListener('DOMContentLoaded',verifyUser)
         const salutation = document.getElementById('salutation');
         const firstName = localStorage.getItem('firstName');
         if (firstName) {
@@ -236,6 +239,9 @@
                     window.location.href = 'login.html';
                 } else {
                     alert('Logout failed. Please try again.');
+                    localStorage.removeItem('firstName');
+                    localStorage.removeItem('userId');
+                    localStorage.removeItem('role');
                 }
             }).catch(error => {
                 
