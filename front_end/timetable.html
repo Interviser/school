@@ -1,6 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+         const verifyUser = async (e)=> {
+            e.preventDefault()
+           
+            
+            try { 
+                const response = await fetch('api/auth/',{
+                    method: 'GET',
+                    credentials: 'include'
+                })
+                if(response.ok){
+                     return
+                }
+                else {
+                    window.location.href = 'login.html'
+                    throw new Error('User not authenticated')}
+                           
+                }
+             catch (err) {
+
+                window.location.href = 'login.html'
+            }
+        
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -201,29 +226,7 @@
     </table>
      <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
      <script>
-         const verifyUser = async (e)=> {
-            e.preventDefault()
-           
-            
-            try { 
-                const response = await fetch('api/auth/',{
-                    method: 'GET',
-                   credentials: 'include'
-                })
-                if(response.ok){
-                     return
-                }
-                else {
-                    throw new Error('User not authenticated')}
-                     window.location.href = 'login.html'
-                }
-             catch (err) {
-               
-                window.location.href = 'login.html'
-            }
         
-        }
-        document.addEventListener('DOMContentLoaded',verifyUser)
      </script>
 </body>
 </html>
