@@ -53,9 +53,10 @@
             margin: 0 auto;
         }
         .header_style{
-            color: #333;
-            font-size: 24px;
+            color: hsl(299, 88%, 47%);
+            font-size: 20px;
             margin-bottom: 10px;
+            text-decoration: underline;
         }
         .message_style{
             color: #555;
@@ -109,7 +110,7 @@
             const data = await response.json()
             data.forEach(item => {
                 const div = document.createElement('div')
-                div.innerHTML = `<h3 class='header_style'>${item.header.toUpperCase()}</h3><p class="message_style">${item.message}</p>`
+                div.innerHTML = `<strong><h3 class='header_style'>${item.header.toUpperCase()}</h3></strong><p class="message_style">${item.message}</p>`
                 annouce.appendChild(div)
             })
         }
