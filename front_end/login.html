@@ -260,6 +260,10 @@
             50% { opacity: 0.5; }
              }
     }
+    .err-msg{
+        color: red;
+        
+    }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
        <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
@@ -303,6 +307,7 @@
                     Password:
                 </label>
             <input type="password" id="password" name="password" required>
+            <p class="err-msg"></p>
 
             </div>
             <div class="container">
@@ -348,7 +353,9 @@
             })
             if(!response.ok){
                 loadingText.style.display = 'none';
-                alert('invalid username or password')
+                const err_msg = document.querySelector('.err-msg')
+                err_msg.innerHTML = 'invalid username or password'
+               
             }
            else{
            const response = await fetch('api/auth',{
@@ -357,7 +364,7 @@
               })
               if(!response.ok){
                 loadingText.style.display = 'none';
-                return window.location.href = 'login.html'
+                return window.location.replace = 'login.html'
               }
               const payload = await response.json();
               const{firstName, admin,id} = payload
