@@ -238,13 +238,13 @@
                 credentials: 'include'
             }).then(response => {
                 if (response.ok) {
-                    localStorage.clear();
-                    window.location.href = 'login.html';
-                } else {
-                    alert('Logout failed. Please try again.');
-                     localStorage.removeItem('firstName');
+                    window.location.replace('login.html');
+                    localStorage.removeItem('firstName');
                     localStorage.removeItem('userId');
                     localStorage.removeItem('role');
+                } else {
+                    alert('Logout failed. Please try again.');
+                     
                 }
             }).catch(error => {
                 
