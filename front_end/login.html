@@ -367,11 +367,10 @@
                 localStorage.setItem('userId', id)
                 
               if(admin === true){
-                    return window.location.replace("admin.html")
-                }
-                window.location.replace("admin.html")
+               return window.location.replace("admin.html")
            }
-        }
+             window.location.replace("homepage.html")
+        }}
              catch (err) {
                 loadingText.style.display = 'none';
                alert('An error occurred. Please try again later.');

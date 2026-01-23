@@ -1,6 +1,6 @@
 const logOut = (req, res) => {
     res.clearCookie('token');
-    res.status(200).json({ message: 'Logged out successfully' });
+    res.redirect("/login.html")
 }
 
 module.exports = { logOut };
