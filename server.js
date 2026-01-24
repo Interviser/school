@@ -4,6 +4,7 @@ const path = require('path');
 const bodyParser = require('body-parser')
 const rateLimiter = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 require('dotenv').config()
 
 
@@ -80,6 +81,12 @@ const protect = (req,res,next)=>{
     if(!token){
         return res.redirect('/login.html')
     }
+    jwt.verify(token,process.env.JWT_SECRET_KEY,(err,decoded)=>{
+        if(err){
+            return res.redirect('/login.html')
+        }
+        req.user = decoded.userId
+    })
     next()
 }
 
