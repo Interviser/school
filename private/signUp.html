@@ -181,13 +181,14 @@
             <button type="submit">Create Account</button>
         </form>
         
-        <div class="login-link">
-            Already have an account? <a href="login.html">Log in</a>
-        </div>
+       <p id="success-msg"></p>
     </div>
     <script>
         document.getElementById('signupForm').addEventListener('submit', async function(event) {
             event.preventDefault(event);
+            const btn = document.querySelector('button');
+            btn.innerText = 'Creating...';
+            btn.disabled = true;
             
             // Clear previous error messages
             document.getElementById('nameError').textContent = '';
@@ -207,12 +208,25 @@
             const contact = document.getElementById('contact').value.trim();
             
             let hasError = false;
-            
+            nameError.textContent = '';
+            emailError.textContent = '';
+            passwordError.textContent = '';
+            confirmError.textContent = '';
+            contactError.textContent = '';
+
             // Validate name fields
-            const nameRegex = /^[A-Za-z]+$/;
-            if (!nameRegex.test(firstName) || !nameRegex.test(middleName) || !nameRegex.test(lastName)) {
+            const nameRegex = /^[A-Za-z\s]+$/;
+            if (!nameRegex.test(firstName) || !nameRegex.test(lastName)) {
                 document.getElementById('nameError').textContent = 'Names can only contain letters.';
                 hasError = true;
+                btn.innerText = 'Create Account';
+                btn.disabled = false;
+            }
+          if(middleName !="" && !nameRegex.test(middleName)){
+                document.getElementById('nameError').textContent = 'Names can only contain letters.';
+                hasError = true;
+                btn.innerText = 'Create Account';
+                btn.disabled = false;
             }
             
             // Validate email
@@ -220,18 +234,24 @@
             if (!emailRegex.test(email)) {
                 document.getElementById('emailError').textContent = 'Please enter a valid email address.';
                 hasError = true;
+                btn.innerText = 'Create Account';
+                btn.disabled = false;
             }
             
             // Validate password
             if (password.length < 8) {
                 document.getElementById('passwordError').textContent = 'Password must be at least 8 characters long.';
                 hasError = true;
+                btn.innerText = 'Create Account';
+                btn.disabled = false;
             }
             
             // Validate confirm password
             if (password !== confirmPassword) {
                 document.getElementById('confirmError').textContent = 'Passwords do not match.';
                 hasError = true;
+                btn.innerText = 'Create Account';
+                btn.disabled = false;
             }
 
             // Validate contact
@@ -239,6 +259,8 @@
             if (!contactRegex.test(contact)) {
                 document.getElementById('contactError').textContent = 'Contact must be 10 to 12 digits.';
                 hasError = true;
+                btn.innerText = 'Create Account';
+                btn.disabled = false;
             }
         if(hasError) {
                 return;
@@ -254,8 +276,7 @@
                 "guardianName": fullName,
                 "contact": contact
             };
-            const token = localStorage.getItem("token")
-            console.log(data)
+           
             try {
                 const response = await fetch('api/signup', {
                     method: 'POST',
@@ -269,15 +290,42 @@
                 
               
                 if (response.ok) {
-                    alert('Account created successfully! Please log in.');
+                    setTimeout(() => {
+                        const successmsg = document.getElementById('success-msg');
+                        successmsg.style.color = 'green';
+                        successmsg.textContent = 'Student registered successfully!';
+                        setTimeout(() => {
+                            successmsg.textContent = '';
+                        }, 3000);
+                    }, 500);
+                    btn.innerText = 'Create Account';
+                    btn.disabled = false;
                     document.getElementById('signupForm').reset();
                     
                 } else {
-                    alert(response);
+                    setTimeout(() => {
+                        const successmsg = document.getElementById('success-msg');
+                        successmsg.style.color = 'red';
+                        successmsg.textContent = 'Failed to register student. Please try again.';
+                        setTimeout(() => {
+                            successmsg.textContent = '';
+                        }, 3000);
+                    }, 500);
+                    btn.innerText = 'Create Account';
+                    btn.disabled = false;
                 }
             } catch (error) {
                
-                alert('An error occurred. Please try again later.');
+                setTimeout(() => {
+                    const successmsg = document.getElementById('success-msg');
+                    successmsg.style.color = 'red';
+                    successmsg.textContent = 'An error occurred. Please try again later.';
+                    setTimeout(() => {
+                        successmsg.textContent = '';
+                    }, 3000);
+                }, 500);
+                btn.innerText = 'Create Account';
+                btn.disabled = false;
             }
         });
          

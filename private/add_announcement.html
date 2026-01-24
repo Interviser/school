@@ -91,8 +91,9 @@
             <label for="message" class="form-label">Message</label>
             <textarea class="form-control" id="message" name="message" rows="3"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn-primary">Submit</button>
     </form>
+    <p id="success-msg"></p>
     <script href="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script>
         try {
@@ -101,6 +102,9 @@
                 const header = document.getElementById('header').value;
                 const message = document.getElementById('message').value;
                 const admin = localStorage.getItem('admin');
+                const btn = document.querySelector('button');
+                btn.innerText = 'Sending...';
+                btn.disabled = true;
 
                  
 
@@ -110,8 +114,6 @@
                  }
                 
                 if(header && message) {
-                    
-                    alert('Announcement Sent:\n\n' + 'Header: ' + header + '\nMessage: ' + message);
                     const res = await fetch('api/noti', {
                         method: 'POST',
                         headers: {
@@ -121,13 +123,43 @@
                         credentials: 'include'
                         
                     });
+                    if(res.ok){
+                       setTimeout(() => {
+                           const successmsg = document.getElementById('success-msg');
+                           successmsg.style.color = 'green';
+                           successmsg.textContent = 'Announcement sent successfully!';
+                            setTimeout(() => {
+                                 successmsg.textContent = '';
+                            }, 3000);
+                          }, 500);
+                        
+                        btn.innerText = 'Submit';
+                        btn.disabled = false;
+                    }
+                    else {
+                      setTimeout(() => {
+                           const successmsg = document.getElementById('success-msg');
+                           successmsg.style.color = 'red';
+                           successmsg.textContent = 'Failed to send announcement. Please try again.';
+                           setTimeout(() => {
+                               successmsg.textContent = '';
+                           }, 3000);
+                          }, 500);
+                        btn.innerText = 'Submit';
+                        btn.disabled = false;
+                    }
                     document.querySelector('form').reset();
                 } else {
                     alert('Please fill in both fields.');
+                    btn.innerText = 'Submit';
+                    btn.disabled = false;
                 }
             });
         } catch (error) {
-            console.log('Error attaching form submit handler:', error);
+           alert('An error occurred. Please try again later.');
+
+            btn.innerText = 'Submit';
+            btn.disabled = false;
         }
         
         
