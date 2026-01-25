@@ -371,7 +371,6 @@
               if(!response.ok){
                 btn.innerText = 'Login';
                 btn.disabled = false;
-                loadingText.style.display = 'none';
                 return window.location.replace = 'login.html'
                
               }
@@ -391,6 +390,8 @@
                
               const err_msg = document.querySelector('.err-msg')
                err_msg.innerHTML = 'something went wrong'
+                btn.innerText = 'Login';
+                btn.disabled = false;
             }
         }
         form.addEventListener('submit', verifyInputs)
