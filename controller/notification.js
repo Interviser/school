@@ -1,4 +1,5 @@
 const noti_model = require('../model/notifications_model')
+const {cache }= require('../middleware/cacheGetAnnouncements')
 
 
 const noti =( async (req,res)=>{
@@ -13,10 +14,11 @@ const noti =( async (req,res)=>{
      await noti_data.save();
     
     res.status(200).json({message: "notification sent successfully"})
+    const announcements = await noti_model.find().sort({createdAt: -1}).select('-__v');
+    cache.set(process.env.ANNOUNCEMENT_KEY, announcements);
     }
     catch(err){
-        res.status(500).json({message: err})
-        console.log(err);
+        res.status(500).json({message: 'an error occurred'});
     }
 })
 module.exports = noti;
