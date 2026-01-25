@@ -39,7 +39,7 @@ const login_controller = async(req,res)=>{
        // res.status(200).json({token: token})
         res.cookie('token', token, {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: 'strict',
             maxAge: 3 * 60 * 60 * 1000 
         }).status(200).json({message: "login successful"});
