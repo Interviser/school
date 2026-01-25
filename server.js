@@ -40,18 +40,19 @@ const limiter = rateLimiter({
 const corsOptoions = {
     origin: process.env.SERVER_URL,
     methods: ['GET','POST','PUT','DELETE'],
-    Credentials: true,
+    credentials: true,
 }
 
 
-
+server.use(cookieParser());
 server.use(limiter);
 server.use(cors(corsOptoions));
+server.use(express.urlencoded({extended: true}));
 server.use(bodyParser.json(corsOptoions));
 server.use(bodyParser.urlencoded({extended: true, limit: '5mb'}));
 server.use(express.json({limit: '5mb'}));
-server.use(express.urlencoded({extended: true}));
-server.use(cookieParser());
+
+
 
 
 server.use('/api',route);

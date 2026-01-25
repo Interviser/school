@@ -96,15 +96,14 @@
  <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 <script>
     const annouce = document.getElementById('announcement_list')
+    
     const get_annouce = async (e)=> {
-        const token = localStorage.getItem('token')
+       annouce.innerHTML = ''
 
         try{
              const response = await fetch('api/announcements',{
-                method: 'POST',
-                     headers: {
-                       'authorization': `Bearer ${token}`
-                    }
+                method: 'GET',
+                 credentials:"include"
         })
         if(response.ok){
             const data = await response.json()
@@ -119,10 +118,11 @@
                             method: 'PUT',
                             headers: {
                                 'Content-Type': 'application/json',
-                                'authorization': `Bearer ${token}`
                             },
-                            body: JSON.stringify({ header: newHeader, message: newMessage })
+                            body: JSON.stringify({ header: newHeader, message: newMessage }),
+                            credentials:"include"
                         })
+                        
                         .then(res => {
                             if (res.ok) {
                                 alert("Announcement updated successfully!");
@@ -140,9 +140,7 @@
                     if (confirm("Are you sure you want to delete this announcement?")) {
                         fetch(`api/deleteAnnouncement/${_id}`, {
                             method: 'DELETE',
-                            headers: {
-                                'authorization': `Bearer ${token}`
-                            }
+                           credentials:"include"
                         })
                         .then(res => {
                             if (res.ok) {

@@ -334,7 +334,8 @@
 
             try {
                 if(!username || !password){
-                    return  alert('fill every inputs')
+                    const err_msg = document.querySelector('.err-msg')
+                     err_msg.innerHTML = 'invalid username or password'
             }
             btn.innerText = 'Logging in...';
             btn.style.backgroundColor = 'lightgray';
@@ -360,6 +361,7 @@
                inputField.classList.add('shake-animation');
                btn.innerText = 'Login';
                btn.disabled = false;
+            
             }
            else{
            const response = await fetch('api/auth',{
@@ -376,7 +378,6 @@
               const payload = await response.json();
               const{firstName, admin,id} = payload
               btn.innerText = 'Login';
-                btn.disabled = false;
                 localStorage.setItem('firstName', firstName)
                 localStorage.setItem('admin', admin)
                 localStorage.setItem('userId', id)
@@ -388,7 +389,8 @@
         }}
              catch (err) {
                
-               alert('An error occurred. Please try again later.');
+              const err_msg = document.querySelector('.err-msg')
+               err_msg.innerHTML = 'something went wrong'
             }
         }
         form.addEventListener('submit', verifyInputs)

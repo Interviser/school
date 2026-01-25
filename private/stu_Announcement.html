@@ -102,7 +102,7 @@
 
         try{
              const response = await fetch('api/announcements',{
-                method: 'POST',
+                method: 'GET',
                      headers: {
                        'content-type': 'application/json',
                     },
@@ -120,7 +120,7 @@
             throw new Error('Failed to fetch announcements')
         }
     } catch (err) {
-        console.log(err)
+        console.log('something went wrong')
     }
 }
 document.addEventListener('DOMContentLoaded',get_annouce);

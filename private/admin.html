@@ -141,6 +141,8 @@
                 align-items: center;
                 border-radius: 8px;
                 border: none;
+                margin-right: auto;
+                margin-left: auto;
             }
             iframe {
                 width: 100%;
@@ -251,6 +253,26 @@
                 alert('An error occurred. Please try again.');
             });
         });
-        
+          let inactivityTimer;
+        document.addEventListener('visibilitychange', function() {
+           if(document.hidden){
+            inactivityTimer = setTimeout(() => {
+                fetch('api/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                }).then(response => {
+                    if (response.ok) {
+                        localStorage.removeItem('firstName');
+                        localStorage.removeItem('userId');
+                        localStorage.removeItem('role');
+                        window.location.replace('login.html');
+                    }
+                });
+            }, 5 * 60 * 1000); 
+           }
+           else {
+            clearTimeout(inactivityTimer);
+           }
+        });
     </script>
 </html>
